@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "act-3",
+    "GameId": "0d2c97c003554969939c530457812526",
+    "Timestamp": "2026-10-25T14:00:00Z",
+    "Seconds": 5400
+  },
+  {
+    "Id": "act-4",
+    "GameId": "c3d4e5f678901234567890abcdef1234",
+    "Timestamp": "2026-10-24T18:00:00Z",
+    "Seconds": 7200
+  },
+  {
+    "Id": "act-5",
+    "GameId": "a1b2c3d4e5f678901234567890abcdef",
+    "Timestamp": "2026-10-23T16:00:00Z",
+    "Seconds": 10800
+  },
+  {
+    "Id": "act-6",
+    "GameId": "b2c3d4e5f678901234567890abcdef12",
+    "Timestamp": "2026-10-22T19:00:00Z",
+    "Seconds": 9000
+  }
+]

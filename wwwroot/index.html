@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameTracker - Трекер игровой активности</title>
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="brand-section">
+      <div class="brand-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="6" y1="12" x2="10" y2="12"></line>
+          <line x1="8" y1="10" x2="8" y2="14"></line>
+          <line x1="15" y1="13" x2="15.01" y2="13"></line>
+          <line x1="18" y1="11" x2="18.01" y2="11"></line>
+          <rect x="2" y="6" width="20" height="12" rx="6"></rect>
+        </svg>
+      </div>
+      <div>
+        <h1 class="brand-title">GameTracker</h1>
+        <div class="brand-subtitle">Активность в играх</div>
+      </div>
+    </div>
+
+    <!-- Live Running Tracker Notification -->
+    <div id="header-running-pill" class="active-tracker-badge">
+      <div class="pulse-dot"></div>
+      <span id="header-running-text">Игра запущена</span>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="library">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        Библиотека
+      </button>
+      <button class="nav-tab" data-tab="statistics">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        Статистика
+      </button>
+      <button class="nav-tab" data-tab="settings">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        Настройки
+      </button>
+    </nav>
+
+    <!-- Header Quick Actions -->
+    <div class="header-actions">
+      <button id="btn-sync-steam-header" class="btn btn-secondary btn-sm" title="Обновить список установленных игр из Steam">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+        Обновить Steam
+      </button>
+      <button id="btn-open-add-modal" class="btn btn-primary btn-sm">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        Добавить игру
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Areas -->
+  <main class="main-content">
+
+    <!-- 1. LIBRARY VIEW -->
+    <section id="library-view" class="tab-view">
+      <!-- Toolbar & Filters -->
+      <div class="toolbar-section">
+        <div class="search-row">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="library-search-input" class="search-input" placeholder="Поиск игры по названию..." autocomplete="off">
+          </div>
+          <select id="library-sort-select" class="sort-select">
+            <option value="playtime_desc">По времени (больше)</option>
+            <option value="playtime_asc">По времени (меньше)</option>
+            <option value="alpha_asc">По алфавиту (А — Я)</option>
+            <option value="alpha_desc">По алфавиту (Я — А)</option>
+            <option value="recent">Недавно играли</option>
+          </select>
+        </div>
+
+        <div class="filters-row">
+          <!-- Status filter -->
+          <div class="filter-group">
+            <span class="filter-label">Статус:</span>
+            <div class="pill-group" id="filter-status-group">
+              <button class="pill active" data-filter="all">Все</button>
+              <button class="pill" data-filter="playing">Играю</button>
+              <button class="pill" data-filter="plan">Планирую</button>
+              <button class="pill" data-filter="completed">Прошел</button>
+              <button class="pill" data-filter="on_hold">Отложил</button>
+              <button class="pill" data-filter="dropped">Забросил</button>
+            </div>
+          </div>
+
+          <!-- Platform filter -->
+          <div class="filter-group">
+            <span class="filter-label">Платформа:</span>
+            <div class="pill-group" id="filter-platform-group">
+              <button class="pill active" data-filter="all">Все</button>
+              <button class="pill" data-filter="PC">PC</button>
+              <button class="pill" data-filter="PlayStation">PlayStation</button>
+              <button class="pill" data-filter="Switch">Switch</button>
+              <button class="pill" data-filter="Xbox">Xbox</button>
+              <button class="pill" data-filter="Steam Deck">Steam Deck</button>
+            </div>
+          </div>
+
+          <!-- Steam filter -->
+          <div class="filter-group">
+            <span class="filter-label">Steam:</span>
+            <div class="pill-group" id="filter-steam-group">
+              <button class="pill active" data-filter="all">Все</button>
+              <button class="pill" data-filter="steam_only">Только Steam</button>
+              <button class="pill" data-filter="non_steam">Без Steam</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Games Grid -->
+      <div id="games-grid" class="games-grid">
+        <!-- Rendered by JavaScript -->
+      </div>
+    </section>
+
+    <!-- 2. STATISTICS VIEW -->
+    <section id="statistics-view" class="tab-view" style="display: none;">
+      <div class="stats-header-bar">
+        <div>
+          <h2 style="font-size: 22px; font-weight: 800;">Статистика активности</h2>
+          <div style="font-size: 13px; color: var(--text-muted);">Анализ игрового времени и тенденций</div>
+        </div>
+
+        <div style="display: flex; gap: 14px; align-items: center;">
+          <!-- Interval selector (for Year) -->
+          <div id="stats-interval-box" style="display: none;">
+            <div class="pill-group" id="stats-interval-group">
+              <button class="pill active" data-interval="standard">По неделям</button>
+              <button class="pill" data-interval="months">По месяцам</button>
+            </div>
+          </div>
+
+          <!-- Period selector -->
+          <div class="stats-period-pills" id="stats-period-group">
+            <button class="pill" data-period="day">День</button>
+            <button class="pill active" data-period="week">Неделя</button>
+            <button class="pill" data-period="month">Месяц</button>
+            <button class="pill" data-period="year">Год</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metric Cards -->
+      <div class="metric-cards-row">
+        <div class="metric-card">
+          <div class="metric-title">Время за период</div>
+          <div class="metric-value" id="stat-total-time">0 ч</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Активных игр</div>
+          <div class="metric-value" id="stat-active-count">0</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Топ игра периода</div>
+          <div class="metric-value" id="stat-top-game" style="font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">-</div>
+        </div>
+      </div>
+
+      <!-- Charts Grid -->
+      <div class="charts-grid">
+        <!-- Pie Chart -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div class="chart-card-title">Распределение времени (Круговая диаграмма)</div>
+          </div>
+          <div class="chart-canvas-wrapper">
+            <canvas id="pieChartCanvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Horizontal Bar Chart -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div class="chart-card-title" id="horizontal-chart-title">Время игры по дням</div>
+          </div>
+          <div class="chart-canvas-wrapper">
+            <canvas id="horizontalChartCanvas"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Games Leaderboard -->
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div class="chart-card-title">Топ игр за выбранный период</div>
+        </div>
+        <table class="top-games-table">
+          <thead>
+            <tr>
+              <th style="width: 50px;">#</th>
+              <th>Игра</th>
+              <th>Платформа</th>
+              <th>Время</th>
+              <th>Доля</th>
+            </tr>
+          </thead>
+          <tbody id="top-games-tbody">
+            <!-- Rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. SETTINGS VIEW -->
+    <section id="settings-view" class="tab-view" style="display: none;">
+      <div style="max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px;">
+        <div>
+          <h2 style="font-size: 22px; font-weight: 800;">Настройки приложения</h2>
+          <div style="font-size: 13px; color: var(--text-muted);">Параметры интеграции со Steam и трекинга процессов</div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-title">Интеграция со Steam</div>
+          <div class="form-group">
+            <label class="form-label">Корневая папка Steam:</label>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="setting-steam-path" class="form-control" style="flex: 1;" placeholder="C:\Program Files (x86)\Steam">
+              <button id="btn-browse-steam-folder" class="btn btn-secondary">Обзор...</button>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+              Приложение автоматически находит все библиотеки Steam (включая диски D:, E: и т.д.) через libraryfolders.vdf.
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-top: 8px;">
+            <button id="btn-sync-steam-settings" class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              Обновить список игр из Steam сейчас
+            </button>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-title">Отслеживание процессов</div>
+          <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer;">
+            <input type="checkbox" id="setting-auto-track" class="todo-checkbox">
+            <span>Автоматически отслеживать время при запущенном .exe файле</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer;">
+            <input type="checkbox" id="setting-scan-startup" class="todo-checkbox">
+            <span>Проверять новые игры Steam при запуске приложения</span>
+          </label>
+          <div style="margin-top: 10px;">
+            <button id="btn-save-settings" class="btn btn-primary">Сохранить настройки</button>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-title">Ярлык на рабочем столе</div>
+          <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">
+            Создает ярлык GameTracker на рабочем столе Windows. Приложение запускается в изолированном окне без адресной строки и рамок браузера.
+          </div>
+          <div>
+            <button id="btn-create-desktop-shortcut" class="btn btn-secondary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+              Создать ярлык на рабочем столе
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- ADD GAME MODAL -->
+  <div id="add-game-modal" class="modal-backdrop">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title">Добавить новую игру</div>
+        <button class="btn btn-ghost btn-sm close-modal-btn">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Autocomplete title input -->
+        <div class="form-group autocomplete-container">
+          <label class="form-label">Название игры (с живыми подсказками):</label>
+          <input type="text" id="add-game-title" class="form-control" placeholder="Начните вводить, например: star, cyberpunk, zelda..." autocomplete="off">
+          <div id="add-autocomplete-dropdown" class="suggestions-dropdown">
+            <!-- Suggestions injected here -->
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 140px 1fr; gap: 20px;">
+          <!-- Cover preview -->
+          <div>
+            <label class="form-label">Обложка:</label>
+            <div id="add-cover-preview-box" class="game-cover-wrapper" style="border-radius: var(--radius-md); box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+              <div class="game-cover-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="6"></rect></svg>
+                <span style="font-size: 11px;">Нет обложки</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="form-group">
+                <label class="form-label">Платформа:</label>
+                <select id="add-game-platform" class="form-control">
+                  <option value="PC">PC</option>
+                  <option value="PlayStation">PlayStation</option>
+                  <option value="Switch">Switch</option>
+                  <option value="Xbox">Xbox</option>
+                  <option value="Steam Deck">Steam Deck</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Статус:</label>
+                <select id="add-game-status" class="form-control">
+                  <option value="playing">Играю</option>
+                  <option value="plan">Планирую играть</option>
+                  <option value="completed">Прошел</option>
+                  <option value="on_hold">Отложил</option>
+                  <option value="dropped">Забросил</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Начальное время игры (часов):</label>
+              <input type="number" id="add-game-base-hours" class="form-control" value="0" min="0" step="0.5">
+              <div style="font-size: 11px; color: var(--text-muted);">Все новые часы будут суммироваться с этим значением.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Путь к файлу игры (.exe) — необязательно:</label>
+              <div style="display: flex; gap: 8px;">
+                <input type="text" id="add-game-exe" class="form-control" style="flex: 1;" placeholder="C:\Games\Game\game.exe">
+                <button type="button" id="btn-browse-add-exe" class="btn btn-secondary">Обзор...</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Первые впечатления / заметки:</label>
+          <textarea id="add-game-notes" class="form-control" rows="3" placeholder="Запишите мысли об игре..."></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary close-modal-btn">Отмена</button>
+        <button id="btn-save-new-game" class="btn btn-primary">Добавить в библиотеку</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME DETAILS MODAL -->
+  <div id="game-detail-modal" class="modal-backdrop">
+    <div class="modal-container" style="max-width: 940px;">
+      <div class="modal-header">
+        <div class="modal-title" id="detail-modal-heading">Об игре</div>
+        <button class="btn btn-ghost btn-sm close-modal-btn">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Hero section -->
+        <div class="game-detail-hero">
+          <img id="detail-cover-img" class="detail-cover" src="" alt="Обложка">
+          
+          <div class="detail-info">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div>
+                <h2 id="detail-title-text" class="detail-title">Название игры</h2>
+                <div class="detail-badges" style="margin-top: 8px;">
+                  <span id="detail-status-badge" class="status-badge">Играю</span>
+                  <span id="detail-platform-badge" class="platform-badge">PC</span>
+                  <span id="detail-steam-badge" class="steam-badge" style="display: none;">Steam</span>
+                  <span id="detail-running-badge" class="status-badge status-playing" style="display: none;">
+                    <div class="pulse-dot"></div> Запущена сейчас
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="playtime-display-box">
+              <div id="detail-total-hours" class="playtime-large">0.0 ч</div>
+              <div class="playtime-sub" id="detail-hours-breakdown">Базовые: 0 ч | Отслежено: 0 мин</div>
+            </div>
+
+            <div id="detail-exe-row" style="font-size: 12px; color: var(--text-secondary); word-break: break-all;">
+              <span style="color: var(--text-muted);">Исполняемый файл:</span> <span id="detail-exe-path">Не указан</span>
+            </div>
+
+            <div class="detail-actions">
+              <button id="btn-open-edit-game" class="btn btn-secondary btn-sm">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                Редактировать игру
+              </button>
+              <button id="btn-delete-game" class="btn btn-danger btn-sm">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                Удалить
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notes and ToDo Grid -->
+        <div class="notes-todos-container">
+          <!-- Notes section -->
+          <div class="todos-card">
+            <div class="todos-header">
+              <span>Заметки и впечатления</span>
+              <button id="btn-save-notes" class="btn btn-secondary btn-sm">Сохранить</button>
+            </div>
+            <textarea id="detail-notes-textarea" class="form-control" style="flex: 1; min-height: 140px;" placeholder="Ваши мысли о сюжете, геймплее, прохождении..."></textarea>
+          </div>
+
+          <!-- Embedded ToDo list -->
+          <div class="todos-card">
+            <div class="todos-header">
+              <span>Задачи в игре (ToDo)</span>
+            </div>
+            <div class="todo-add-row">
+              <input type="text" id="detail-new-todo-input" class="todo-add-input" placeholder="Например: Построить дом...">
+              <button id="btn-add-todo" class="btn btn-primary btn-sm">Добавить</button>
+            </div>
+            <div id="detail-todo-list" class="todo-list">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Game Specific Horizontal Activity Chart -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div class="chart-card-title">График активности в игре</div>
+            <div class="stats-period-pills" id="game-chart-period-group">
+              <button class="pill" data-period="day">День</button>
+              <button class="pill active" data-period="week">Неделя</button>
+              <button class="pill" data-period="month">Месяц</button>
+              <button class="pill" data-period="year">Год</button>
+            </div>
+          </div>
+          <div class="chart-canvas-wrapper" style="height: 220px;">
+            <canvas id="gameHorizontalChartCanvas"></canvas>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT GAME MODAL -->
+  <div id="edit-game-modal" class="modal-backdrop">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title">Редактирование игры</div>
+        <button class="btn btn-ghost btn-sm close-modal-btn">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="edit-game-id">
+
+        <div class="form-group">
+          <label class="form-label">Название игры:</label>
+          <input type="text" id="edit-game-title" class="form-control">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label class="form-label">Платформа:</label>
+            <select id="edit-game-platform" class="form-control">
+              <option value="PC">PC</option>
+              <option value="PlayStation">PlayStation</option>
+              <option value="Switch">Switch</option>
+              <option value="Xbox">Xbox</option>
+              <option value="Steam Deck">Steam Deck</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Статус:</label>
+            <select id="edit-game-status" class="form-control">
+              <option value="playing">Играю</option>
+              <option value="plan">Планирую играть</option>
+              <option value="completed">Прошел</option>
+              <option value="on_hold">Отложил</option>
+              <option value="dropped">Забросил</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Начальные часы игры (Base Hours):</label>
+          <input type="number" id="edit-game-base-hours" class="form-control" step="0.5" min="0">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Путь к файлу .exe игры:</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="edit-game-exe" class="form-control" style="flex: 1;">
+            <button type="button" id="btn-browse-edit-exe" class="btn btn-secondary">Обзор...</button>
+          </div>
+        </div>
+
+        <!-- Custom Cover Upload Section -->
+        <div class="chart-card" style="padding: 14px;">
+          <div class="form-label" style="font-weight: 700; margin-bottom: 6px;">Загрузить файл обложки с компьютера:</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+            При несоответствии пропорций картинка будет автоматически обрезана и смасштабирована до эталонного вертикального размера Steam (2:3 / 600x900).
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <input type="file" id="edit-cover-file-input" accept="image/*" class="form-control" style="flex: 1; padding: 6px 12px;">
+            <button type="button" id="btn-upload-cover" class="btn btn-secondary">Загрузить обложку</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary close-modal-btn">Отмена</button>
+        <button id="btn-save-edit-game" class="btn btn-primary">Сохранить изменения</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast-notification" class="toast-notification">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <span id="toast-message">Действие выполнено</span>
+  </div>
+
+  <!-- Chart.js local bundle -->
+  <script src="js/chart.umd.min.js"></script>
+  <!-- Application Script -->
+  <script src="js/app.js"></script>
+</body>
+</html>
