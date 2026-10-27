@@ -1149,18 +1149,6 @@
     const themeSelect = document.getElementById('setting-theme');
     if (themeSelect) themeSelect.value = currentTheme;
 
-    const themeToggleIcon = document.getElementById('theme-toggle-icon');
-    const themeToggleText = document.getElementById('theme-toggle-text');
-    if (themeToggleIcon && themeToggleText) {
-      if (currentTheme === 'light') {
-        themeToggleIcon.textContent = '🌙';
-        themeToggleText.textContent = 'Dark';
-      } else {
-        themeToggleIcon.textContent = '☀️';
-        themeToggleText.textContent = 'Light';
-      }
-    }
-
     // Refresh charts if open
     if (statsHorizontalChart) {
       loadStatistics();
@@ -1174,9 +1162,6 @@
     currentLang = I18N[lang] ? lang : 'en';
     const langSelect = document.getElementById('setting-language');
     if (langSelect) langSelect.value = currentLang;
-
-    const headerLang = document.getElementById('header-lang-select');
-    if (headerLang) headerLang.value = currentLang;
 
     // Update text content with data-i18n
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -2317,7 +2302,7 @@
 
   // ======================== SETTINGS & STEAM ========================
   function setupSettings() {
-    // Header & Settings Language change
+    // Language change
     const langSelect = document.getElementById('setting-language');
     if (langSelect) {
       langSelect.addEventListener('change', (e) => {
@@ -2326,28 +2311,11 @@
       });
     }
 
-    const headerLangSelect = document.getElementById('header-lang-select');
-    if (headerLangSelect) {
-      headerLangSelect.addEventListener('change', (e) => {
-        applyLanguage(e.target.value);
-        saveSettingsDirect();
-      });
-    }
-
-    // Header & Settings Theme change
+    // Theme change
     const themeSelect = document.getElementById('setting-theme');
     if (themeSelect) {
       themeSelect.addEventListener('change', (e) => {
         applyTheme(e.target.value);
-        saveSettingsDirect();
-      });
-    }
-
-    const btnToggleTheme = document.getElementById('btn-toggle-theme');
-    if (btnToggleTheme) {
-      btnToggleTheme.addEventListener('click', () => {
-        const next = (currentTheme === 'dark') ? 'light' : 'dark';
-        applyTheme(next);
         saveSettingsDirect();
       });
     }

@@ -3,6 +3,6 @@
   "AutoTrackRunningGames": true,
   "ScanSteamOnStartup": true,
   "TrackerIntervalMs": 3000,
-  "Language": "en",
+  "Language": "ru",
   "Theme": "dark"
 }
