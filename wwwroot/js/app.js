@@ -102,12 +102,15 @@
       renderGamesGrid();
       updateHeaderRunningStatus();
 
-      // If details modal is open for a game, update its live data
+      // If details modal is open for a game, update only live counters (DO NOT wipe active notes editing)
       if (currentGame) {
         const updated = allGames.find(g => g.id === currentGame.id);
         if (updated) {
-          currentGame = updated;
-          renderGameDetails(currentGame);
+          currentGame.totalHours = updated.totalHours;
+          currentGame.trackedSeconds = updated.trackedSeconds;
+          currentGame.isRunning = updated.isRunning;
+          currentGame.lastPlayedAt = updated.lastPlayedAt;
+          updateDetailLiveCounters(currentGame);
         }
       }
     } catch (err) {
@@ -129,8 +132,11 @@
           if (currentGame) {
             const updated = allGames.find(g => g.id === currentGame.id);
             if (updated) {
-              currentGame = updated;
-              renderGameDetails(currentGame);
+              currentGame.totalHours = updated.totalHours;
+              currentGame.trackedSeconds = updated.trackedSeconds;
+              currentGame.isRunning = updated.isRunning;
+              currentGame.lastPlayedAt = updated.lastPlayedAt;
+              updateDetailLiveCounters(currentGame);
             }
           }
         }
@@ -478,43 +484,95 @@
   }
 
   // ======================== GAME DETAILS MODAL ========================
+  let notesAutoSaveTimer = null;
+
   function setupGameDetails() {
-    // Save Notes Button
-    document.getElementById('btn-save-notes').addEventListener('click', async () => {
-      if (!currentGame) return;
-      const notes = document.getElementById('detail-notes-textarea').value;
-      currentGame.notes = notes;
-      await saveCurrentGame();
-      showToast('Заметки сохранены');
-    });
+    const textarea = document.getElementById('detail-notes-textarea');
+    const saveBtn = document.getElementById('btn-save-notes');
+    const insertTodoBtn = document.getElementById('btn-insert-todo');
+    const statusEl = document.getElementById('notes-save-status');
 
-    // Add ToDo Item Button & Enter key
-    const todoInput = document.getElementById('detail-new-todo-input');
-    const addTodo = async () => {
-      if (!currentGame) return;
-      const text = todoInput.value.trim();
-      if (!text) return;
+    // Live auto-save on typing (debounced) & refresh interactive checklist
+    if (textarea) {
+      textarea.addEventListener('input', () => {
+        if (statusEl) {
+          statusEl.textContent = '● Сохранение...';
+          statusEl.style.color = 'var(--accent-amber)';
+        }
+        renderInteractiveChecklistFromNotes(textarea.value);
 
-      if (!currentGame.toDos) currentGame.toDos = [];
-      currentGame.toDos.push({
-        id: Math.random().toString(36).substring(2, 10),
-        text: text,
-        done: false,
-        createdAt: new Date().toISOString()
+        clearTimeout(notesAutoSaveTimer);
+        notesAutoSaveTimer = setTimeout(async () => {
+          if (!currentGame) return;
+          currentGame.notes = textarea.value;
+          syncTodosFromNotes(currentGame);
+          await saveCurrentGame();
+          if (statusEl) {
+            statusEl.textContent = '✓ Сохранено';
+            statusEl.style.color = 'var(--accent-emerald)';
+          }
+        }, 700);
       });
 
-      todoInput.value = '';
-      renderTodoList(currentGame.toDos);
-      await saveCurrentGame();
-    };
+      // Smart Enter key continuation for [] tasks
+      textarea.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const selStart = textarea.selectionStart;
+          const textBefore = textarea.value.substring(0, selStart);
+          const textAfter = textarea.value.substring(selStart);
+          const lastLineBreak = textBefore.lastIndexOf('\n');
+          const currentLine = textBefore.substring(lastLineBreak + 1);
 
-    document.getElementById('btn-add-todo').addEventListener('click', addTodo);
-    todoInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        addTodo();
-      }
-    });
+          const match = currentLine.match(/^(\s*)(\[[ xX]?\]\s*)/);
+          if (match) {
+            e.preventDefault();
+            const indent = match[1];
+            const taskContent = currentLine.substring(match[0].length).trim();
+
+            // If user presses enter on an empty task line, clear [] prefix
+            if (!taskContent) {
+              const lineStart = lastLineBreak + 1;
+              textarea.value = textBefore.substring(0, lineStart) + textAfter;
+              textarea.selectionStart = textarea.selectionEnd = lineStart;
+            } else {
+              const insertion = '\n' + indent + '[] ';
+              textarea.value = textBefore + insertion + textAfter;
+              textarea.selectionStart = textarea.selectionEnd = selStart + insertion.length;
+            }
+            textarea.dispatchEvent(new Event('input'));
+          }
+        }
+      });
+    }
+
+    // Insert "+ [] Задача" button
+    if (insertTodoBtn && textarea) {
+      insertTodoBtn.addEventListener('click', () => {
+        const val = textarea.value;
+        const needsNewline = val.length > 0 && !val.endsWith('\n');
+        const toInsert = (needsNewline ? '\n' : '') + '[] ';
+        textarea.value = val + toInsert;
+        textarea.focus();
+        textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
+        textarea.dispatchEvent(new Event('input'));
+      });
+    }
+
+    // Manual Save Notes Button
+    if (saveBtn && textarea) {
+      saveBtn.addEventListener('click', async () => {
+        if (!currentGame) return;
+        clearTimeout(notesAutoSaveTimer);
+        currentGame.notes = textarea.value;
+        syncTodosFromNotes(currentGame);
+        await saveCurrentGame();
+        if (statusEl) {
+          statusEl.textContent = '✓ Сохранено';
+          statusEl.style.color = 'var(--accent-emerald)';
+        }
+        showToast('Заметки и задачи сохранены');
+      });
+    }
 
     // Delete Game Button
     document.getElementById('btn-delete-game').addEventListener('click', async () => {
@@ -588,63 +646,120 @@
     const steamBadge = document.getElementById('detail-steam-badge');
     steamBadge.style.display = game.isSteam ? 'inline-flex' : 'none';
 
-    const runningBadge = document.getElementById('detail-running-badge');
-    runningBadge.style.display = game.isRunning ? 'inline-flex' : 'none';
-
-    // Playtime
-    document.getElementById('detail-total-hours').textContent = `${formatHours(game.totalHours)} ч`;
-    const trackedMins = Math.round((game.trackedSeconds || 0) / 60);
-    const trackedHours = (trackedMins / 60).toFixed(1);
-    document.getElementById('detail-hours-breakdown').textContent = 
-      `Базовые: ${game.baseHours} ч | Отслежено в фоне: ${trackedHours} ч (${trackedMins} мин)`;
+    // Update live counters
+    updateDetailLiveCounters(game);
 
     // Exe path
     const exeSpan = document.getElementById('detail-exe-path');
     exeSpan.textContent = game.executablePath || 'Не указан (время не трекается в фоне)';
 
-    // Notes
-    document.getElementById('detail-notes-textarea').value = game.notes || '';
+    // Notes textarea
+    const textarea = document.getElementById('detail-notes-textarea');
+    if (textarea) {
+      textarea.value = game.notes || '';
+    }
 
-    // ToDo list
-    renderTodoList(game.toDos || []);
+    // Reset status indicator
+    const statusEl = document.getElementById('notes-save-status');
+    if (statusEl) {
+      statusEl.textContent = '● Сохранено';
+      statusEl.style.color = 'var(--text-muted)';
+    }
+
+    // Render interactive checklist from notes
+    renderInteractiveChecklistFromNotes(game.notes || '');
   }
 
-  function renderTodoList(todos) {
-    const list = document.getElementById('detail-todo-list');
-    list.innerHTML = '';
+  function updateDetailLiveCounters(game) {
+    const totalEl = document.getElementById('detail-total-hours');
+    if (totalEl) totalEl.textContent = `${formatHours(game.totalHours)} ч`;
 
-    if (!todos || todos.length === 0) {
-      list.innerHTML = '<div style="font-size: 12px; color: var(--text-muted); padding: 8px;">Задач пока нет. Добавьте задачу выше.</div>';
+    const breakdownEl = document.getElementById('detail-hours-breakdown');
+    if (breakdownEl) {
+      const trackedMins = Math.round((game.trackedSeconds || 0) / 60);
+      const trackedHours = (trackedMins / 60).toFixed(1);
+      breakdownEl.textContent = `Базовые: ${game.baseHours} ч | Отслежено в фоне: ${trackedHours} ч (${trackedMins} мин)`;
+    }
+
+    const runningBadge = document.getElementById('detail-running-badge');
+    if (runningBadge) runningBadge.style.display = game.isRunning ? 'inline-flex' : 'none';
+  }
+
+  // Render interactive checkboxes from any line starting with [] or [x] in notes
+  function renderInteractiveChecklistFromNotes(notesText) {
+    const container = document.getElementById('notes-interactive-checklist');
+    const counterEl = document.getElementById('notes-todo-counter');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const lines = (notesText || '').split('\n');
+    const taskLines = [];
+
+    lines.forEach((line, lineIndex) => {
+      const match = line.match(/^(\s*)\[([ xX]?)\]\s*(.*)$/);
+      if (match) {
+        taskLines.push({
+          lineIndex: lineIndex,
+          indent: match[1],
+          done: match[2].toLowerCase() === 'x',
+          text: match[3] || 'Без названия'
+        });
+      }
+    });
+
+    if (counterEl) {
+      const doneCount = taskLines.filter(t => t.done).length;
+      counterEl.textContent = `${doneCount} из ${taskLines.length} выполнено`;
+    }
+
+    if (taskLines.length === 0) {
+      container.innerHTML = '<div style="font-size: 12px; color: var(--text-muted); padding: 4px 0;">Задач пока нет. Начните строку с <code>[]</code> или нажмите <b>+ [] Задача</b> выше.</div>';
       return;
     }
 
-    todos.forEach((todo, idx) => {
+    taskLines.forEach(task => {
       const item = document.createElement('div');
-      item.className = `todo-item ${todo.done ? 'done' : ''}`;
+      item.className = `todo-item ${task.done ? 'done' : ''}`;
 
       item.innerHTML = `
-        <input type="checkbox" class="todo-checkbox" ${todo.done ? 'checked' : ''}>
-        <span class="todo-text">${escapeHtml(todo.text)}</span>
-        <button class="todo-del-btn" title="Удалить задачу">✕</button>
+        <input type="checkbox" class="todo-checkbox" ${task.done ? 'checked' : ''}>
+        <span class="todo-text">${escapeHtml(task.text)}</span>
       `;
 
-      // Toggle done
       const checkbox = item.querySelector('.todo-checkbox');
-      checkbox.addEventListener('change', async () => {
-        todo.done = checkbox.checked;
-        item.classList.toggle('done', todo.done);
-        await saveCurrentGame();
+      checkbox.addEventListener('change', () => {
+        const textarea = document.getElementById('detail-notes-textarea');
+        if (!textarea) return;
+        const currentLines = textarea.value.split('\n');
+        if (task.lineIndex < currentLines.length) {
+          const targetLine = currentLines[task.lineIndex];
+          const m = targetLine.match(/^(\s*)\[([ xX]?)\]\s*(.*)$/);
+          if (m) {
+            const newPrefix = checkbox.checked ? '[x] ' : '[] ';
+            currentLines[task.lineIndex] = m[1] + newPrefix + m[3];
+            textarea.value = currentLines.join('\n');
+            textarea.dispatchEvent(new Event('input'));
+          }
+        }
       });
 
-      // Delete item
-      const delBtn = item.querySelector('.todo-del-btn');
-      delBtn.addEventListener('click', async () => {
-        todos.splice(idx, 1);
-        renderTodoList(todos);
-        await saveCurrentGame();
-      });
+      container.appendChild(item);
+    });
+  }
 
-      list.appendChild(item);
+  function syncTodosFromNotes(game) {
+    const lines = (game.notes || '').split('\n');
+    game.toDos = [];
+    lines.forEach(line => {
+      const m = line.match(/^\s*\[([ xX]?)\]\s*(.*)$/);
+      if (m && m[2].trim()) {
+        game.toDos.push({
+          id: Math.random().toString(36).substring(2, 10),
+          text: m[2].trim(),
+          done: m[1].toLowerCase() === 'x',
+          createdAt: new Date().toISOString()
+        });
+      }
     });
   }
 
@@ -1161,6 +1276,7 @@
   function closeAllModals() {
     document.querySelectorAll('.modal-backdrop').forEach(m => m.classList.remove('active'));
     document.getElementById('add-autocomplete-dropdown').classList.remove('active');
+    currentGame = null;
   }
 
   // ======================== UTILITIES ========================

@@ -411,28 +411,38 @@
           </div>
         </div>
 
-        <!-- Notes and ToDo Grid -->
-        <div class="notes-todos-container">
-          <!-- Notes section -->
-          <div class="todos-card">
-            <div class="todos-header">
-              <span>Заметки и впечатления</span>
-              <button id="btn-save-notes" class="btn btn-secondary btn-sm">Сохранить</button>
+        <!-- Unified Notes & ToDo Section in the same menu -->
+        <div class="todos-card" style="padding: 18px;">
+          <div class="todos-header" style="margin-bottom: 8px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 15px; font-weight: 700;">Заметки и задачи (ToDo)</span>
+              <span id="notes-save-status" style="font-size: 12px; color: var(--text-muted);">● Сохранено</span>
             </div>
-            <textarea id="detail-notes-textarea" class="form-control" style="flex: 1; min-height: 140px;" placeholder="Ваши мысли о сюжете, геймплее, прохождении..."></textarea>
+            <div style="display: flex; gap: 8px;">
+              <button type="button" id="btn-insert-todo" class="btn btn-secondary btn-sm" title="Вставить строку задачи []">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                + [] Задача
+              </button>
+              <button type="button" id="btn-save-notes" class="btn btn-primary btn-sm">
+                Сохранить
+              </button>
+            </div>
+          </div>
+          
+          <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+            Строки, начинающиеся с <code style="background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 4px; color: var(--accent-cyan);">[]</code> или <code style="background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 4px; color: var(--accent-cyan);">[ ]</code>, автоматически становятся задачами ToDo. Выполненные задачи помечаются как <code style="background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 4px; color: var(--accent-emerald);">[x]</code>.
           </div>
 
-          <!-- Embedded ToDo list -->
-          <div class="todos-card">
-            <div class="todos-header">
-              <span>Задачи в игре (ToDo)</span>
+          <textarea id="detail-notes-textarea" class="form-control" style="width: 100%; min-height: 150px; font-family: inherit; font-size: 14px; line-height: 1.6;" placeholder="В игре очень интересный сюжет и музыка, сейчас я поставил себе такие задачи:&#10;[] Построить дом&#10;[] Купить новую пушку&#10;[] Семь раз отметить&#10;[] Один раз отрезать"></textarea>
+
+          <!-- Interactive Checklist preview generated from [] lines in notes -->
+          <div id="notes-todo-preview-container" style="margin-top: 14px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">Интерактивный список задач:</span>
+              <span id="notes-todo-counter" style="font-size: 12px; color: var(--text-muted);">0 / 0</span>
             </div>
-            <div class="todo-add-row">
-              <input type="text" id="detail-new-todo-input" class="todo-add-input" placeholder="Например: Построить дом...">
-              <button id="btn-add-todo" class="btn btn-primary btn-sm">Добавить</button>
-            </div>
-            <div id="detail-todo-list" class="todo-list">
-              <!-- Rendered by JS -->
+            <div id="notes-interactive-checklist" class="todo-list">
+              <!-- Checkboxes rendered directly from [] lines -->
             </div>
           </div>
         </div>
