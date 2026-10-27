@@ -91,6 +91,7 @@
       detail_heading: "Game Details",
       exe_unspecified: "Not specified (not tracking in background)",
       btn_edit_game: "Edit Game",
+      btn_play: "Play",
       btn_delete: "Delete",
       notes_todo_title: "Notes & Tasks (ToDo)",
       notes_hint: "Lines starting with [] or [ ] automatically become ToDo tasks. Completed tasks are marked with [x].",
@@ -1716,6 +1717,22 @@
     }
 
     // Delete Game Button
+    // Play Game
+    document.getElementById('btn-play-game').addEventListener('click', async () => {
+      if (!currentGame) return;
+      try {
+        const res = await fetch(`/api/gamelaunch/${currentGame.id}`, { method: 'POST' });
+        if (res.ok) {
+          showToast(t('now_playing') + '...');
+        } else {
+          const err = await res.text();
+          alert(err);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    });
+
     document.getElementById('btn-delete-game').addEventListener('click', async () => {
       if (!currentGame) return;
       if (!confirm(t('delete_confirm', { title: currentGame.title }))) {
