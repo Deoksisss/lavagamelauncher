@@ -188,7 +188,9 @@ public class GameRepository
                 SteamPath = _settings.SteamPath,
                 AutoTrackRunningGames = _settings.AutoTrackRunningGames,
                 ScanSteamOnStartup = _settings.ScanSteamOnStartup,
-                TrackerIntervalMs = _settings.TrackerIntervalMs
+                TrackerIntervalMs = _settings.TrackerIntervalMs,
+                Language = _settings.Language,
+                Theme = _settings.Theme
             };
         }
     }

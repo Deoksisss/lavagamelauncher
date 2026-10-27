@@ -2,5 +2,7 @@
   "SteamPath": "C:\\Program Files (x86)\\Steam",
   "AutoTrackRunningGames": true,
   "ScanSteamOnStartup": true,
-  "TrackerIntervalMs": 3000
+  "TrackerIntervalMs": 3000,
+  "Language": "en",
+  "Theme": "dark"
 }

@@ -6,22 +6,22 @@
     "Status": "playing",
     "CoverUrl": "https://steamcdn-a.akamaihd.net/steam/apps/404790/library_600x900_2x.jpg",
     "ExecutablePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Godot Engine\\godot.windows.opt.tools.64.exe",
-    "BaseHours": 12.0,
+    "BaseHours": 12,
     "TrackedSeconds": 3600,
-    "TotalHours": 13.0,
+    "TotalHours": 13,
     "IsSteam": true,
     "SteamAppId": "404790",
-    "Notes": "Разработка прототипа 2D платформера и шейдеров освещения.\n\nЗадачи:\n[x] Настроить физику прыжка\n[] Добавить звуковые эффекты",
+    "Notes": "\u0420\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0430 \u043F\u0440\u043E\u0442\u043E\u0442\u0438\u043F\u0430 2D \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0435\u0440\u0430 \u0438 \u0448\u0435\u0439\u0434\u0435\u0440\u043E\u0432 \u043E\u0441\u0432\u0435\u0449\u0435\u043D\u0438\u044F.\n\n\u0417\u0430\u0434\u0430\u0447\u0438:\n[x] \u041D\u0430\u0441\u0442\u0440\u043E\u0438\u0442\u044C \u0444\u0438\u0437\u0438\u043A\u0443 \u043F\u0440\u044B\u0436\u043A\u0430\n[] \u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0437\u0432\u0443\u043A\u043E\u0432\u044B\u0435 \u044D\u0444\u0444\u0435\u043A\u0442\u044B",
     "ToDos": [
       {
         "Id": "todo-g1",
-        "Text": "Настроить физику прыжка",
+        "Text": "\u041D\u0430\u0441\u0442\u0440\u043E\u0438\u0442\u044C \u0444\u0438\u0437\u0438\u043A\u0443 \u043F\u0440\u044B\u0436\u043A\u0430",
         "Done": true,
         "CreatedAt": "2026-10-26T07:00:00Z"
       },
       {
         "Id": "todo-g2",
-        "Text": "Добавить звуковые эффекты",
+        "Text": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0437\u0432\u0443\u043A\u043E\u0432\u044B\u0435 \u044D\u0444\u0444\u0435\u043A\u0442\u044B",
         "Done": false,
         "CreatedAt": "2026-10-26T07:05:00Z"
       }
@@ -41,29 +41,29 @@
     "TotalHours": 50.5,
     "IsSteam": false,
     "SteamAppId": "1716740",
-    "Notes": "В игре очень интересный сюжет и музыка, сейчас я поставил себе такие задачи:\n[] Построить дом\n[x] Купить новую пушку\n[] Семь раз отметить\n[] Один раз отрезать",
+    "Notes": "\u0412 \u0438\u0433\u0440\u0435 \u043E\u0447\u0435\u043D\u044C \u0438\u043D\u0442\u0435\u0440\u0435\u0441\u043D\u044B\u0439 \u0441\u044E\u0436\u0435\u0442 \u0438 \u043C\u0443\u0437\u044B\u043A\u0430, \u0441\u0435\u0439\u0447\u0430\u0441 \u044F \u043F\u043E\u0441\u0442\u0430\u0432\u0438\u043B \u0441\u0435\u0431\u0435 \u0442\u0430\u043A\u0438\u0435 \u0437\u0430\u0434\u0430\u0447\u0438:\n[] \u041F\u043E\u0441\u0442\u0440\u043E\u0438\u0442\u044C \u0434\u043E\u043C\n[x] \u041A\u0443\u043F\u0438\u0442\u044C \u043D\u043E\u0432\u0443\u044E \u043F\u0443\u0448\u043A\u0443\n[] \u0421\u0435\u043C\u044C \u0440\u0430\u0437 \u043E\u0442\u043C\u0435\u0442\u0438\u0442\u044C\n[] \u041E\u0434\u0438\u043D \u0440\u0430\u0437 \u043E\u0442\u0440\u0435\u0437\u0430\u0442\u044C",
     "ToDos": [
       {
         "Id": "todo-1",
-        "Text": "Построить дом",
+        "Text": "\u041F\u043E\u0441\u0442\u0440\u043E\u0438\u0442\u044C \u0434\u043E\u043C",
         "Done": false,
         "CreatedAt": "2026-10-26T07:41:18Z"
       },
       {
         "Id": "todo-2",
-        "Text": "Купить новую пушку",
+        "Text": "\u041A\u0443\u043F\u0438\u0442\u044C \u043D\u043E\u0432\u0443\u044E \u043F\u0443\u0448\u043A\u0443",
         "Done": true,
         "CreatedAt": "2026-10-26T07:41:18Z"
       },
       {
         "Id": "todo-3",
-        "Text": "Семь раз отметить",
+        "Text": "\u0421\u0435\u043C\u044C \u0440\u0430\u0437 \u043E\u0442\u043C\u0435\u0442\u0438\u0442\u044C",
         "Done": false,
         "CreatedAt": "2026-10-26T07:41:18Z"
       },
       {
         "Id": "todo-4",
-        "Text": "Один раз отрезать",
+        "Text": "\u041E\u0434\u0438\u043D \u0440\u0430\u0437 \u043E\u0442\u0440\u0435\u0437\u0430\u0442\u044C",
         "Done": false,
         "CreatedAt": "2026-10-26T07:41:18Z"
       }
@@ -78,22 +78,22 @@
     "Status": "completed",
     "CoverUrl": "https://media.rawg.io/media/games/556/55684bfd048706f4266d331d70050b37.jpg",
     "ExecutablePath": null,
-    "BaseHours": 115.0,
+    "BaseHours": 115,
     "TrackedSeconds": 0,
-    "TotalHours": 115.0,
+    "TotalHours": 115,
     "IsSteam": false,
     "SteamAppId": null,
-    "Notes": "Шедевр открытого мира и креативных механизмов с Ultrahand. Пройдена основная сюжетная линия и все 152 святилища.\n\nПлан прохождения:\n[] Собрать всех Короков (900/1000)\n[x] Пройти финал и победить Ганона",
+    "Notes": "\u0428\u0435\u0434\u0435\u0432\u0440 \u043E\u0442\u043A\u0440\u044B\u0442\u043E\u0433\u043E \u043C\u0438\u0440\u0430 \u0438 \u043A\u0440\u0435\u0430\u0442\u0438\u0432\u043D\u044B\u0445 \u043C\u0435\u0445\u0430\u043D\u0438\u0437\u043C\u043E\u0432 \u0441 Ultrahand. \u041F\u0440\u043E\u0439\u0434\u0435\u043D\u0430 \u043E\u0441\u043D\u043E\u0432\u043D\u0430\u044F \u0441\u044E\u0436\u0435\u0442\u043D\u0430\u044F \u043B\u0438\u043D\u0438\u044F \u0438 \u0432\u0441\u0435 152 \u0441\u0432\u044F\u0442\u0438\u043B\u0438\u0449\u0430.\n\n\u041F\u043B\u0430\u043D \u043F\u0440\u043E\u0445\u043E\u0436\u0434\u0435\u043D\u0438\u044F:\n[] \u0421\u043E\u0431\u0440\u0430\u0442\u044C \u0432\u0441\u0435\u0445 \u041A\u043E\u0440\u043E\u043A\u043E\u0432 (900/1000)\n[x] \u041F\u0440\u043E\u0439\u0442\u0438 \u0444\u0438\u043D\u0430\u043B \u0438 \u043F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0413\u0430\u043D\u043E\u043D\u0430",
     "ToDos": [
       {
         "Id": "todo-z1",
-        "Text": "Собрать всех Короков (900/1000)",
+        "Text": "\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u0432\u0441\u0435\u0445 \u041A\u043E\u0440\u043E\u043A\u043E\u0432 (900/1000)",
         "Done": false,
         "CreatedAt": "2026-10-26T07:00:00Z"
       },
       {
         "Id": "todo-z2",
-        "Text": "Пройти финал и победить Ганона",
+        "Text": "\u041F\u0440\u043E\u0439\u0442\u0438 \u0444\u0438\u043D\u0430\u043B \u0438 \u043F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0413\u0430\u043D\u043E\u043D\u0430",
         "Done": true,
         "CreatedAt": "2026-10-26T07:00:00Z"
       }
@@ -108,18 +108,18 @@
     "Status": "completed",
     "CoverUrl": "https://media.rawg.io/media/games/214/214b29aeff13a0ae6a70fc4426e85991.jpg",
     "ExecutablePath": null,
-    "BaseHours": 84.0,
+    "BaseHours": 85,
     "TrackedSeconds": 0,
-    "TotalHours": 84.0,
+    "TotalHours": 85,
     "IsSteam": false,
     "SteamAppId": null,
-    "Notes": "Атмосфера Ярнама неповторима. Получена платина в PSN.\n\nПлан:\n[x] Зачистить Чаши Птумеру\n[x] Победить Сироту Коса",
+    "Notes": "\u0410\u0442\u043C\u043E\u0441\u0444\u0435\u0440\u0430 \u042F\u0440\u043D\u0430\u043C\u0430 \u043D\u0435\u043F\u043E\u0432\u0442\u043E\u0440\u0438\u043C\u0430. \u041F\u043E\u043B\u0443\u0447\u0435\u043D\u0430 \u043F\u043B\u0430\u0442\u0438\u043D\u0430 \u0432 PSN.\n\n[] \u041A\u0443\u043F\u0438\u0442\u044C \u043F\u043E\u043C\u0438\u0434\u043E\u0440\u044B",
     "ToDos": [
       {
-        "Id": "todo-bb1",
-        "Text": "Зачистить Чаши Птумеру",
-        "Done": true,
-        "CreatedAt": "2026-10-26T07:00:00Z"
+        "Id": "g0d7ecuf",
+        "Text": "\u041A\u0443\u043F\u0438\u0442\u044C \u043F\u043E\u043C\u0438\u0434\u043E\u0440\u044B",
+        "Done": false,
+        "CreatedAt": "2026-10-27T14:36:09.165Z"
       }
     ],
     "CreatedAt": "2026-10-26T06:00:00Z",
@@ -132,21 +132,38 @@
     "Status": "playing",
     "CoverUrl": "https://steamcdn-a.akamaihd.net/steam/apps/1091500/library_600x900_2x.jpg",
     "ExecutablePath": null,
-    "BaseHours": 62.0,
+    "BaseHours": 62,
     "TrackedSeconds": 0,
-    "TotalHours": 62.0,
+    "TotalHours": 62,
     "IsSteam": true,
     "SteamAppId": "1091500",
-    "Notes": "Отлично играется на Steam Deck с профилем графики Steam Deck 40 FPS.\n\nЗадачи:\n[] Пройти DLC Phantom Liberty\n[x] Завершить квест Панам",
+    "Notes": "\u041E\u0442\u043B\u0438\u0447\u043D\u043E \u0438\u0433\u0440\u0430\u0435\u0442\u0441\u044F \u043D\u0430 Steam Deck \u0441 \u043F\u0440\u043E\u0444\u0438\u043B\u0435\u043C \u0433\u0440\u0430\u0444\u0438\u043A\u0438 Steam Deck 40 FPS.\n\n\u0417\u0430\u0434\u0430\u0447\u0438:\n[] \u041F\u0440\u043E\u0439\u0442\u0438 DLC Phantom Liberty\n[x] \u0417\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044C \u043A\u0432\u0435\u0441\u0442 \u041F\u0430\u043D\u0430\u043C",
     "ToDos": [
       {
         "Id": "todo-cp1",
-        "Text": "Пройти DLC Phantom Liberty",
+        "Text": "\u041F\u0440\u043E\u0439\u0442\u0438 DLC Phantom Liberty",
         "Done": false,
         "CreatedAt": "2026-10-26T07:00:00Z"
       }
     ],
     "CreatedAt": "2026-10-26T06:00:00Z",
     "LastPlayedAt": "2026-10-26T06:30:00Z"
+  },
+  {
+    "Id": "7adc9b39ad7345c189928a327472021d",
+    "Title": "TEKKEN 8",
+    "Platform": "PC",
+    "Status": "playing",
+    "CoverUrl": "https://steamcdn-a.akamaihd.net/steam/apps/1778820/library_600x900_2x.jpg",
+    "ExecutablePath": null,
+    "BaseHours": 0,
+    "TrackedSeconds": 0,
+    "TotalHours": 0,
+    "IsSteam": true,
+    "SteamAppId": "1778820",
+    "Notes": "",
+    "ToDos": [],
+    "CreatedAt": "2026-10-27T14:36:35.0217745Z",
+    "LastPlayedAt": null
   }
 ]
