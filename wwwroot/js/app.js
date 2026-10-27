@@ -1941,7 +1941,21 @@
     document.getElementById('edit-game-platform').value = game.platform;
     document.getElementById('edit-game-status').value = game.status;
     document.getElementById('edit-game-base-hours').value = game.baseHours;
-    document.getElementById('edit-game-exe').value = game.executablePath || '';
+    
+    const exeInput = document.getElementById('edit-game-exe');
+    const browseBtn = document.getElementById('btn-browse-edit-exe');
+    
+    exeInput.value = game.executablePath || '';
+    
+    // Disable editing for Steam games
+    if (game.isSteam) {
+        exeInput.disabled = true;
+        browseBtn.disabled = true;
+    } else {
+        exeInput.disabled = false;
+        browseBtn.disabled = false;
+    }
+
     document.getElementById('edit-cover-file-input').value = '';
 
     document.getElementById('edit-game-modal').classList.add('active');
