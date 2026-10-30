@@ -24,6 +24,18 @@ public class ProcessTrackerService : BackgroundService
     {
         _logger.LogInformation("ProcessTrackerService started.");
 
+        var steamService = _serviceProvider.GetRequiredService<SteamService>();
+        try
+        {
+            steamService.StartWatchingLibraries();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Could not start Steam library watcher");
+        }
+
+        int cycleCount = 0;
+
         while (!stoppingToken.IsCancellationRequested)
         {
             try
@@ -35,6 +47,17 @@ public class ProcessTrackerService : BackgroundService
                 if (settings.AutoTrackRunningGames)
                 {
                     CheckRunningProcesses(repository);
+                }
+
+                // Periodically scan Steam libraries for newly installed games (every ~12 seconds)
+                cycleCount++;
+                if (cycleCount % 4 == 0 && settings.ScanSteamOnStartup)
+                {
+                    try
+                    {
+                        steamService.ScanAndImportGames(forceSync: false);
+                    }
+                    catch { }
                 }
 
                 await Task.Delay(settings.TrackerIntervalMs > 500 ? settings.TrackerIntervalMs : 3000, stoppingToken);
@@ -49,6 +72,12 @@ public class ProcessTrackerService : BackgroundService
                 await Task.Delay(5000, stoppingToken);
             }
         }
+
+        try
+        {
+            steamService.StopWatchingLibraries();
+        }
+        catch { }
 
         _logger.LogInformation("ProcessTrackerService stopped.");
     }

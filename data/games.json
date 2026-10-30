@@ -7,7 +7,7 @@
     "CoverUrl": "https://steamcdn-a.akamaihd.net/steam/apps/404790/library_600x900_2x.jpg",
     "ExecutablePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Godot Engine\\godot.windows.opt.tools.64.exe",
     "BaseHours": 12,
-    "TrackedSeconds": 3827.197389900002,
+    "TrackedSeconds": 3830.2397036000016,
     "TotalHours": 13.1,
     "IsSteam": true,
     "SteamAppId": "404790",
@@ -27,7 +27,7 @@
       }
     ],
     "CreatedAt": "2026-10-26T07:40:56Z",
-    "LastPlayedAt": "2026-10-30T09:13:39.4728166Z"
+    "LastPlayedAt": "2026-10-30T09:40:02.8258165Z"
   },
   {
     "Id": "99a5ac1674334860943733a5d97c7ba7",
@@ -150,20 +150,20 @@
     "LastPlayedAt": "2026-10-26T06:30:00Z"
   },
   {
-    "Id": "7adc9b39ad7345c189928a327472021d",
-    "Title": "TEKKEN 8",
+    "Id": "36f80145c99042aaafd97f1f0b181302",
+    "Title": "Soldier of Failure 2",
     "Platform": "PC",
     "Status": "playing",
-    "CoverUrl": "https://steamcdn-a.akamaihd.net/steam/apps/1778820/library_600x900_2x.jpg",
-    "ExecutablePath": null,
+    "CoverUrl": "https://steamcdn-a.akamaihd.net/steam/apps/729170/library_600x900_2x.jpg",
+    "ExecutablePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Soldier of Failure 2\\Soldier of Failure 2.exe",
     "BaseHours": 0,
     "TrackedSeconds": 0,
     "TotalHours": 0,
     "IsSteam": true,
-    "SteamAppId": "1778820",
+    "SteamAppId": "729170",
     "Notes": "",
     "ToDos": [],
-    "CreatedAt": "2026-10-27T14:36:35.0217745Z",
+    "CreatedAt": "2026-10-30T09:48:48.6631456Z",
     "LastPlayedAt": null
   }
 ]

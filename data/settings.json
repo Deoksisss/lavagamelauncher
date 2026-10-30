@@ -5,7 +5,5 @@
   "TrackerIntervalMs": 3000,
   "Language": "ru",
   "Theme": "dark",
-  "IgnoredSteamAppIds": [
-    "729170"
-  ]
+  "IgnoredSteamAppIds": []
 }

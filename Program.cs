@@ -193,10 +193,19 @@ app.MapPost("/api/settings", (AppSettings settings) =>
 });
 
 // 12. Manual Steam scan
-app.MapPost("/api/steam/scan", () =>
+// 12. Trigger Steam library scan (forceSync=true on manual user request)
+app.MapPost("/api/steam/scan", (SteamService steamService) =>
 {
-    var count = steamService.ScanAndImportGames();
-    return Results.Ok(new { importedCount = count });
+    var (importedCount, updatedCount, newGameTitles) = steamService.ScanAndImportGamesDetailed(forceSync: true);
+    return Results.Ok(new 
+    { 
+        importedCount, 
+        updatedCount, 
+        newGames = newGameTitles,
+        message = importedCount > 0 
+            ? $"Обнаружено новых игр: {importedCount} ({string.Join(", ", newGameTitles)})" 
+            : "Все игры Steam синхронизированы" 
+    });
 });
 
 // 13. Create Desktop Shortcut

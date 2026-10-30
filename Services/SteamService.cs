@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using GameTracker.Models;
+using Microsoft.Win32;
 
 namespace GameTracker.Services;
 
@@ -7,6 +8,9 @@ public class SteamService
 {
     private readonly GameRepository _repository;
     private readonly ILogger<SteamService> _logger;
+    private readonly List<FileSystemWatcher> _watchers = new();
+    private DateTime _lastAutoScanTime = DateTime.MinValue;
+    private readonly object _watcherLock = new();
 
     public SteamService(GameRepository repository, ILogger<SteamService> logger)
     {
@@ -14,19 +18,86 @@ public class SteamService
         _logger = logger;
     }
 
-    public int ScanAndImportGames()
+    public string ResolveSteamPath(string? configuredPath = null)
+    {
+        if (!string.IsNullOrWhiteSpace(configuredPath) && Directory.Exists(configuredPath))
+        {
+            return configuredPath;
+        }
+
+        var settings = _repository.GetSettings();
+        if (!string.IsNullOrWhiteSpace(settings.SteamPath) && Directory.Exists(settings.SteamPath))
+        {
+            return settings.SteamPath;
+        }
+
+        try
+        {
+            // 64-bit Windows registry
+            using var key64 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Valve\Steam");
+            var val64 = key64?.GetValue("InstallPath") as string;
+            if (!string.IsNullOrEmpty(val64) && Directory.Exists(val64)) return val64;
+
+            // 32-bit Windows registry
+            using var key32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Valve\Steam");
+            var val32 = key32?.GetValue("InstallPath") as string;
+            if (!string.IsNullOrEmpty(val32) && Directory.Exists(val32)) return val32;
+
+            // Current User registry
+            using var keyCu = Registry.CurrentUser.OpenSubKey(@"Software\Valve\Steam");
+            var valCu = keyCu?.GetValue("SteamPath") as string;
+            if (!string.IsNullOrEmpty(valCu))
+            {
+                var norm = valCu.Replace('/', '\\');
+                if (Directory.Exists(norm)) return norm;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogDebug(ex, "Registry query for Steam path threw an exception");
+        }
+
+        // Common default directories
+        string[] candidates = {
+            @"C:\Program Files (x86)\Steam",
+            @"C:\Program Files\Steam",
+            @"D:\Steam",
+            @"D:\Games\Steam",
+            @"E:\Steam",
+            @"E:\Games\Steam"
+        };
+
+        foreach (var c in candidates)
+        {
+            if (Directory.Exists(c)) return c;
+        }
+
+        return @"C:\Program Files (x86)\Steam";
+    }
+
+    public (int importedCount, int updatedCount, List<string> newGameTitles) ScanAndImportGamesDetailed(bool forceSync = false)
     {
         var settings = _repository.GetSettings();
-        var steamPath = settings.SteamPath;
+        var steamPath = ResolveSteamPath(settings.SteamPath);
 
         if (string.IsNullOrWhiteSpace(steamPath) || !Directory.Exists(steamPath))
         {
             _logger.LogWarning("Steam directory not found: {Path}", steamPath);
-            return 0;
+            return (0, 0, new List<string>());
+        }
+
+        // If forceSync is requested (e.g. user manually clicked "Sync Steam"), clear ignored list so newly installed/restored games are imported
+        if (forceSync && settings.IgnoredSteamAppIds != null && settings.IgnoredSteamAppIds.Count > 0)
+        {
+            _logger.LogInformation("Force sync requested: clearing {Count} ignored Steam game IDs.", settings.IgnoredSteamAppIds.Count);
+            settings.IgnoredSteamAppIds.Clear();
+            _repository.SaveSettings(settings);
         }
 
         var libraryPaths = GetLibraryPaths(steamPath);
         int importedCount = 0;
+        int updatedCount = 0;
+        var newGameTitles = new List<string>();
 
         foreach (var libPath in libraryPaths)
         {
@@ -47,8 +118,8 @@ public class SteamService
                         continue;
                     }
 
-                    // Skip games explicitly deleted/ignored by the user
-                    if (settings.IgnoredSteamAppIds != null && settings.IgnoredSteamAppIds.Contains(gameInfo.AppId, StringComparer.OrdinalIgnoreCase))
+                    // Skip ignored games ONLY if not forceSync
+                    if (!forceSync && settings.IgnoredSteamAppIds != null && settings.IgnoredSteamAppIds.Contains(gameInfo.AppId, StringComparer.OrdinalIgnoreCase))
                     {
                         _logger.LogInformation("Skipping deleted/ignored Steam game: {Name} (AppId: {AppId})", gameInfo.Name, gameInfo.AppId);
                         continue;
@@ -74,6 +145,8 @@ public class SteamService
                         };
                         _repository.AddOrUpdateGame(newGame);
                         importedCount++;
+                        newGameTitles.Add(newGame.Title);
+                        _logger.LogInformation("Discovered and imported new Steam game: {Name} (AppId: {AppId})", newGame.Title, newGame.SteamAppId);
                     }
                     else
                     {
@@ -101,6 +174,7 @@ public class SteamService
                         if (updated)
                         {
                             _repository.AddOrUpdateGame(existing);
+                            updatedCount++;
                         }
                     }
                 }
@@ -111,39 +185,131 @@ public class SteamService
             }
         }
 
-        _logger.LogInformation("Steam scan finished. Imported/updated {Count} games.", importedCount);
+        _logger.LogInformation("Steam scan finished. Imported {ImportedCount} new, updated {UpdatedCount} games.", importedCount, updatedCount);
+        return (importedCount, updatedCount, newGameTitles);
+    }
+
+    public int ScanAndImportGames(bool forceSync = false)
+    {
+        var (importedCount, _, _) = ScanAndImportGamesDetailed(forceSync);
         return importedCount;
+    }
+
+    public void StartWatchingLibraries()
+    {
+        StopWatchingLibraries();
+        var steamPath = ResolveSteamPath();
+        var libraryPaths = GetLibraryPaths(steamPath);
+
+        foreach (var lib in libraryPaths)
+        {
+            var steamapps = Path.Combine(lib, "steamapps");
+            if (!Directory.Exists(steamapps)) continue;
+
+            try
+            {
+                var watcher = new FileSystemWatcher(steamapps, "appmanifest_*.acf")
+                {
+                    NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite | NotifyFilters.CreationTime,
+                    EnableRaisingEvents = true
+                };
+
+                FileSystemEventHandler handler = (s, e) =>
+                {
+                    lock (_watcherLock)
+                    {
+                        if ((DateTime.UtcNow - _lastAutoScanTime).TotalSeconds < 2) return;
+                        _lastAutoScanTime = DateTime.UtcNow;
+                    }
+
+                    _logger.LogInformation("Steam library change detected in {Path}: {ChangeType} {Name}. Auto-syncing...", steamapps, e.ChangeType, e.Name);
+                    Task.Delay(1200).ContinueWith(_ =>
+                    {
+                        ScanAndImportGamesDetailed(forceSync: false);
+                    });
+                };
+
+                watcher.Created += handler;
+                watcher.Changed += handler;
+                _watchers.Add(watcher);
+                _logger.LogInformation("Started file watcher for Steam library: {Path}", steamapps);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to start FileSystemWatcher for {Path}", steamapps);
+            }
+        }
+    }
+
+    public void StopWatchingLibraries()
+    {
+        foreach (var w in _watchers)
+        {
+            try
+            {
+                w.EnableRaisingEvents = false;
+                w.Dispose();
+            }
+            catch { }
+        }
+        _watchers.Clear();
     }
 
     private List<string> GetLibraryPaths(string steamPath)
     {
-        var paths = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { steamPath };
-        var libraryVdf = Path.Combine(steamPath, "steamapps", "libraryfolders.vdf");
-
-        if (File.Exists(libraryVdf))
+        var paths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        if (!string.IsNullOrWhiteSpace(steamPath) && Directory.Exists(steamPath))
         {
-            try
+            paths.Add(steamPath);
+        }
+
+        // Parse libraryfolders.vdf
+        if (!string.IsNullOrWhiteSpace(steamPath))
+        {
+            var libraryVdf = Path.Combine(steamPath, "steamapps", "libraryfolders.vdf");
+            if (File.Exists(libraryVdf))
             {
-                var content = File.ReadAllText(libraryVdf);
-                // Match "path" "..."
-                var matches = Regex.Matches(content, @"""path""\s+""([^""]+)""");
-                foreach (Match m in matches)
+                try
                 {
-                    if (m.Groups.Count > 1)
+                    var content = File.ReadAllText(libraryVdf);
+                    var matches = Regex.Matches(content, @"""path""\s+""([^""]+)""");
+                    foreach (Match m in matches)
                     {
-                        var p = m.Groups[1].Value.Replace(@"\\", @"\");
-                        if (Directory.Exists(p))
+                        if (m.Groups.Count > 1)
                         {
-                            paths.Add(p);
+                            var p = m.Groups[1].Value.Replace(@"\\", @"\");
+                            if (Directory.Exists(p))
+                            {
+                                paths.Add(p);
+                            }
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning(ex, "Failed reading libraryfolders.vdf");
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Failed reading libraryfolders.vdf");
+                }
             }
         }
+
+        // Scan all drive roots for SteamLibrary folders
+        try
+        {
+            foreach (var drive in DriveInfo.GetDrives().Where(d => d.IsReady))
+            {
+                var candidate1 = Path.Combine(drive.RootDirectory.FullName, "SteamLibrary");
+                if (Directory.Exists(Path.Combine(candidate1, "steamapps")))
+                {
+                    paths.Add(candidate1);
+                }
+                var candidate2 = Path.Combine(drive.RootDirectory.FullName, "Games", "SteamLibrary");
+                if (Directory.Exists(Path.Combine(candidate2, "steamapps")))
+                {
+                    paths.Add(candidate2);
+                }
+            }
+        }
+        catch { }
 
         return paths.ToList();
     }

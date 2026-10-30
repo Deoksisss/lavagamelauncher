@@ -2655,16 +2655,23 @@
 
     // Sync Steam
     const handleSteamSync = async () => {
-      showToast(t('settings_sync_now') + '...');
+      showToast(t('settings_sync_now') + '...', 'info');
       try {
         const res = await fetch('/api/steam/scan', { method: 'POST' });
         if (res.ok) {
           const data = await res.json();
           await loadGames();
-          showToast(t('toast_steam_sync', { count: data.importedCount }));
+          if (data && data.importedCount > 0 && data.newGames && data.newGames.length > 0) {
+            showToast(`${t('toast_steam_sync', { count: data.importedCount })}: ${data.newGames.join(', ')}`, 'success');
+          } else {
+            showToast(t('toast_steam_sync', { count: (data && data.importedCount) || 0 }), 'success');
+          }
+        } else {
+          showToast('Steam sync error', 'error');
         }
       } catch (e) {
         console.error(e);
+        showToast('Steam sync error', 'error');
       }
     };
 
