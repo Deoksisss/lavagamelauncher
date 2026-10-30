@@ -10,6 +10,8 @@ builder.Services.AddSingleton<ImageProcessingService>();
 builder.Services.AddSingleton<GameSearchService>();
 builder.Services.AddSingleton<SteamService>();
 builder.Services.AddSingleton<StatisticsService>();
+builder.Services.AddSingleton<GameLaunchService>();
+builder.Services.AddSingleton<DialogService>();
 
 // Background Process Tracker
 builder.Services.AddSingleton<ProcessTrackerService>();
@@ -23,7 +25,7 @@ builder.WebHost.ConfigureKestrel(options =>
 
 var app = builder.Build();
 
-// Host static files from wwwroot and data/covers
+// Host static files from wwwroot and data/covers with no-cache headers for instant updates
 app.UseDefaultFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
@@ -50,6 +52,8 @@ var trackerService = app.Services.GetRequiredService<ProcessTrackerService>();
 var searchService = app.Services.GetRequiredService<GameSearchService>();
 var imgService = app.Services.GetRequiredService<ImageProcessingService>();
 var statsService = app.Services.GetRequiredService<StatisticsService>();
+var launchService = app.Services.GetRequiredService<GameLaunchService>();
+var dialogService = app.Services.GetRequiredService<DialogService>();
 
 var initialSettings = repository.GetSettings();
 if (initialSettings.ScanSteamOnStartup)
@@ -134,7 +138,28 @@ app.MapPost("/api/games/{id}/cover", async (string id, HttpRequest request) =>
     }
 });
 
-// 6. Autocomplete search games
+// 6. Launch game endpoint
+app.MapPost("/api/gamelaunch/{id}", (string id) =>
+{
+    var (success, message) = launchService.LaunchGame(id);
+    return Results.Ok(new { success, message, error = success ? null : message });
+});
+
+// 7. Native file dialog for selecting Game EXE
+app.MapGet("/api/dialog/select-exe", () =>
+{
+    var path = dialogService.SelectExecutableFile();
+    return Results.Ok(new { path });
+});
+
+// 8. Native dialog for selecting Steam Folder
+app.MapGet("/api/dialog/select-steam-folder", () =>
+{
+    var path = dialogService.SelectFolder("Выберите корневую папку Steam (например C:\\Program Files (x86)\\Steam)");
+    return Results.Ok(new { path });
+});
+
+// 9. Autocomplete search games
 app.MapGet("/api/search", async (string? q) =>
 {
     if (string.IsNullOrWhiteSpace(q))
@@ -145,14 +170,14 @@ app.MapGet("/api/search", async (string? q) =>
     return Results.Ok(results);
 });
 
-// 7. Statistics
+// 10. Statistics
 app.MapGet("/api/statistics", (string? period, string? interval, string? gameId) =>
 {
     var stats = statsService.GetPeriodStatistics(period ?? "week", interval ?? "standard", gameId);
     return Results.Ok(stats);
 });
 
-// 8. Settings
+// 11. Settings
 app.MapGet("/api/settings", () => Results.Ok(repository.GetSettings()));
 
 app.MapPost("/api/settings", (AppSettings settings) =>
@@ -161,60 +186,14 @@ app.MapPost("/api/settings", (AppSettings settings) =>
     return Results.Ok(settings);
 });
 
-// 9. Manual Steam scan
+// 12. Manual Steam scan
 app.MapPost("/api/steam/scan", () =>
 {
     var count = steamService.ScanAndImportGames();
     return Results.Ok(new { importedCount = count });
 });
 
-// 10. Native file dialog for selecting Game EXE
-app.MapGet("/api/dialog/select-exe", () =>
-{
-    string? selectedPath = null;
-    var thread = new Thread(() =>
-    {
-        using var dlg = new OpenFileDialog
-        {
-            Filter = "Исполняемые файлы (*.exe)|*.exe|Все файлы (*.*)|*.*",
-            Title = "Выберите исполняемый файл игры (.exe)"
-        };
-        if (dlg.ShowDialog() == DialogResult.OK)
-        {
-            selectedPath = dlg.FileName;
-        }
-    });
-    thread.SetApartmentState(ApartmentState.STA);
-    thread.Start();
-    thread.Join();
-
-    return Results.Ok(new { path = selectedPath });
-});
-
-// 11. Native dialog for selecting Steam Folder
-app.MapGet("/api/dialog/select-steam-folder", () =>
-{
-    string? selectedPath = null;
-    var thread = new Thread(() =>
-    {
-        using var dlg = new FolderBrowserDialog
-        {
-            Description = "Выберите корневую папку Steam (например C:\\Program Files (x86)\\Steam)",
-            UseDescriptionForTitle = true
-        };
-        if (dlg.ShowDialog() == DialogResult.OK)
-        {
-            selectedPath = dlg.SelectedPath;
-        }
-    });
-    thread.SetApartmentState(ApartmentState.STA);
-    thread.Start();
-    thread.Join();
-
-    return Results.Ok(new { path = selectedPath });
-});
-
-// 12. Create Desktop Shortcut
+// 13. Create Desktop Shortcut
 app.MapPost("/api/shortcut/create", () =>
 {
     try
@@ -229,7 +208,7 @@ sLinkFile = ""{Path.Combine(desktopPath, "GameTracker.lnk").Replace(@"\", @"\\")
 Set oLink = oWS.CreateShortcut(sLinkFile)
 oLink.TargetPath = ""{launcherBat.Replace(@"\", @"\\")}""
 oLink.WorkingDirectory = ""{projectDir.Replace(@"\", @"\\")}""
-oLink.Description = ""GameTracker - Трекер игровой активности""
+oLink.Description = ""GameTracker - Game Activity Tracker""
 oLink.Save
 ";
         var tempVbs = Path.Combine(Path.GetTempPath(), "create_shortcut.vbs");

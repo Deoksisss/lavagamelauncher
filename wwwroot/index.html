@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GameTracker - Game Activity Tracker</title>
-  <link rel="stylesheet" href="css/app.css?v=20261027b">
+  <link rel="stylesheet" href="css/app.css?v=20261030">
 </head>
 <body>
   <!-- App Header -->
@@ -432,8 +432,8 @@
             </div>
 
             <div class="detail-actions">
-              <button id="btn-play-game" class="btn btn-primary btn-sm">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <button id="btn-play-game" class="btn btn-success btn-play-hero">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                 <span data-i18n="btn_play">Play</span>
               </button>
               <button id="btn-open-edit-game" class="btn btn-secondary btn-sm">
@@ -549,10 +549,18 @@
           <input type="number" id="edit-game-base-hours" class="form-control" step="0.5" min="0">
         </div>
 
-        <div class="form-group">
+        <div id="edit-steam-notice" class="steam-managed-box" style="display: none;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <div>
+            <div style="font-weight: 700; color: var(--accent-cyan);" data-i18n="steam_managed_title">Steam Game</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;" data-i18n="steam_managed_desc">Files and launching are managed automatically via the Steam client. Manual path editing is locked.</div>
+          </div>
+        </div>
+
+        <div class="form-group" id="edit-exe-group">
           <label class="form-label" data-i18n="exe_path_label">Path to game .exe file:</label>
           <div style="display: flex; gap: 8px;">
-            <input type="text" id="edit-game-exe" class="form-control" style="flex: 1;">
+            <input type="text" id="edit-game-exe" class="form-control" style="flex: 1;" placeholder="C:\Games\Game\game.exe">
             <button type="button" id="btn-browse-edit-exe" class="btn btn-secondary" data-i18n="btn_browse">Browse...</button>
           </div>
         </div>
@@ -579,13 +587,15 @@
 
   <!-- Notification Toast -->
   <div id="toast-notification" class="toast-notification">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <div id="toast-icon-wrapper" class="toast-icon-box">
+      <svg id="toast-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    </div>
     <span id="toast-message">Action completed</span>
   </div>
 
   <!-- Chart.js local bundle -->
   <script src="js/chart.umd.min.js"></script>
   <!-- Application Script -->
-  <script src="js/app.js?v=20261027b"></script>
+  <script src="js/app.js?v=20261030"></script>
 </body>
 </html>

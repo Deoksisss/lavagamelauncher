@@ -7,7 +7,7 @@
     "CoverUrl": "https://steamcdn-a.akamaihd.net/steam/apps/404790/library_600x900_2x.jpg",
     "ExecutablePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Godot Engine\\godot.windows.opt.tools.64.exe",
     "BaseHours": 12,
-    "TrackedSeconds": 3600,
+    "TrackedSeconds": 3606.0954697,
     "TotalHours": 13,
     "IsSteam": true,
     "SteamAppId": "404790",
@@ -27,7 +27,7 @@
       }
     ],
     "CreatedAt": "2026-10-26T07:40:56Z",
-    "LastPlayedAt": "2026-10-26T07:30:00Z"
+    "LastPlayedAt": "2026-10-30T09:09:58.3709099Z"
   },
   {
     "Id": "99a5ac1674334860943733a5d97c7ba7",

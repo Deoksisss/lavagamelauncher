@@ -92,7 +92,16 @@
       exe_unspecified: "Not specified (not tracking in background)",
       btn_edit_game: "Edit Game",
       btn_play: "Play",
+      btn_playing: "Running",
+      btn_details: "Details",
       btn_delete: "Delete",
+      browsing: "Browsing...",
+      steam_managed_title: "Steam Game",
+      steam_managed_desc: "Files and launching are managed automatically via the Steam client. Manual path editing is locked.",
+      toast_launching: "Launching \"{title}\"...",
+      toast_launch_success: "Game \"{title}\" launched!",
+      toast_launch_failed: "Failed to launch game: {error}",
+      browse_error: "Failed to open file dialog.",
       notes_todo_title: "Notes & Tasks (ToDo)",
       notes_hint: "Lines starting with [] or [ ] automatically become ToDo tasks. Completed tasks are marked with [x].",
       btn_insert_todo: "+ [] Task",
@@ -210,7 +219,17 @@
       detail_heading: "Об игре",
       exe_unspecified: "Не указан (время не трекается в фоне)",
       btn_edit_game: "Редактировать игру",
+      btn_play: "Играть",
+      btn_playing: "Запущено",
+      btn_details: "Об игре",
       btn_delete: "Удалить",
+      browsing: "Поиск файла...",
+      steam_managed_title: "Игра из Steam",
+      steam_managed_desc: "Файлы и запуск контролируются клиентом Steam. Ручное изменение пути заблокировано.",
+      toast_launching: "Запуск «{title}»...",
+      toast_launch_success: "Игра «{title}» запущена!",
+      toast_launch_failed: "Не удалось запустить: {error}",
+      browse_error: "Не удалось открыть окно выбора файла.",
       notes_todo_title: "Заметки и задачи (ToDo)",
       notes_hint: "Строки, начинающиеся с [] или [ ], автоматически становятся задачами ToDo. Выполненные задачи помечаются как [x].",
       btn_insert_todo: "+ [] Задача",
@@ -328,7 +347,17 @@
       detail_heading: "Detalhes do Jogo",
       exe_unspecified: "Não especificado (sem rastreamento em segundo plano)",
       btn_edit_game: "Editar Jogo",
+      btn_play: "Jogar",
+      btn_playing: "Em execução",
+      btn_details: "Detalhes",
       btn_delete: "Excluir",
+      browsing: "Procurando...",
+      steam_managed_title: "Jogo do Steam",
+      steam_managed_desc: "Os arquivos e a inicialização são gerenciados pelo cliente Steam. A edição de caminho está bloqueada.",
+      toast_launching: "Iniciando \"{title}\"...",
+      toast_launch_success: "Jogo \"{title}\" iniciado!",
+      toast_launch_failed: "Falha ao iniciar o jogo: {error}",
+      browse_error: "Falha ao abrir a caixa de diálogo.",
       notes_todo_title: "Notas e Tarefas (ToDo)",
       notes_hint: "Linhas iniciadas com [] ou [ ] viram tarefas interativas. Tarefas concluídas usam [x].",
       btn_insert_todo: "+ [] Tarefa",
@@ -446,7 +475,17 @@
       detail_heading: "Detalles del Juego",
       exe_unspecified: "No especificado (sin seguimiento en segundo plano)",
       btn_edit_game: "Editar Juego",
+      btn_play: "Jugar",
+      btn_playing: "En ejecución",
+      btn_details: "Detalles",
       btn_delete: "Eliminar",
+      browsing: "Buscando...",
+      steam_managed_title: "Juego de Steam",
+      steam_managed_desc: "Los archivos y el inicio se gestionan mediante el cliente Steam. La edición de ruta está bloqueada.",
+      toast_launching: "Iniciando \"{title}\"...",
+      toast_launch_success: "¡Juego \"{title}\" iniciado!",
+      toast_launch_failed: "Error al iniciar el juego: {error}",
+      browse_error: "Error al abrir el cuadro de diálogo.",
       notes_todo_title: "Notas y Tareas (ToDo)",
       notes_hint: "Las líneas que comienzan con [] o [ ] se convierten en tareas ToDo. Las completadas usan [x].",
       btn_insert_todo: "+ [] Tarea",
@@ -564,7 +603,17 @@
       detail_heading: "Spieldetails",
       exe_unspecified: "Nicht angegeben (keine Hintergrundüberwachung)",
       btn_edit_game: "Spiel bearbeiten",
+      btn_play: "Spielen",
+      btn_playing: "Wird ausgeführt",
+      btn_details: "Details",
       btn_delete: "Löschen",
+      browsing: "Suchen...",
+      steam_managed_title: "Steam-Spiel",
+      steam_managed_desc: "Dateien und Start werden über den Steam-Client verwaltet. Die Pfadbearbeitung ist gesperrt.",
+      toast_launching: "Starte \"{title}\"...",
+      toast_launch_success: "Spiel \"{title}\" gestartet!",
+      toast_launch_failed: "Fehler beim Starten des Spiels: {error}",
+      browse_error: "Dateidialog konnte nicht geöffnet werden.",
       notes_todo_title: "Notizen & Aufgaben (ToDo)",
       notes_hint: "Zeilen, die mit [] oder [ ] beginnen, werden zu ToDo-Aufgaben. Erledigte Aufgaben nutzen [x].",
       btn_insert_todo: "+ [] Aufgabe",
@@ -682,7 +731,17 @@
       detail_heading: "Détails du Jeu",
       exe_unspecified: "Non spécifié (pas de suivi en arrière-plan)",
       btn_edit_game: "Modifier le Jeu",
+      btn_play: "Jouer",
+      btn_playing: "En cours",
+      btn_details: "Détails",
       btn_delete: "Supprimer",
+      browsing: "Parcourir...",
+      steam_managed_title: "Jeu Steam",
+      steam_managed_desc: "Les fichiers et le lancement sont gérés via le client Steam. La modification du chemin est verrouillée.",
+      toast_launching: "Lancement de \"{title}\"...",
+      toast_launch_success: "Jeu \"{title}\" lancé !",
+      toast_launch_failed: "Échec du lancement du jeu : {error}",
+      browse_error: "Impossible d'ouvrir la boîte de dialogue.",
       notes_todo_title: "Notes et Tâches (ToDo)",
       notes_hint: "Les lignes commençant par [] ou [ ] deviennent des tâches ToDo. Celles cochées utilisent [x].",
       btn_insert_todo: "+ [] Tâche",
@@ -800,7 +859,17 @@
       detail_heading: "游戏详情",
       exe_unspecified: "未指定路径 (后台不自动追踪)",
       btn_edit_game: "编辑游戏",
+      btn_play: "运行",
+      btn_playing: "运行中",
+      btn_details: "详情",
       btn_delete: "删除游戏",
+      browsing: "浏览中...",
+      steam_managed_title: "Steam 游戏",
+      steam_managed_desc: "游戏文件与启动由 Steam 客户端统一管理，路径编辑已锁定。",
+      toast_launching: "正在启动《{title}》...",
+      toast_launch_success: "游戏《{title}》已启动！",
+      toast_launch_failed: "启动失败：{error}",
+      browse_error: "无法打开文件选择窗口。",
       notes_todo_title: "游戏笔记与待办任务 (ToDo)",
       notes_hint: "以 [] 或 [ ] 开头的行会自动成为待办任务项。已完成任务标记为 [x]。",
       btn_insert_todo: "+ [] 任务项",
@@ -918,7 +987,17 @@
       detail_heading: "ゲーム詳細",
       exe_unspecified: "未指定 (バックグラウンド計測なし)",
       btn_edit_game: "ゲームを編集",
+      btn_play: "プレイ",
+      btn_playing: "実行中",
+      btn_details: "詳細",
       btn_delete: "削除",
+      browsing: "参照中...",
+      steam_managed_title: "Steam ゲーム",
+      steam_managed_desc: "ファイルと起動は Steam クライアントで自動管理されます。パスの編集はロックされています。",
+      toast_launching: "「{title}」を起動中...",
+      toast_launch_success: "「{title}」が起動しました！",
+      toast_launch_failed: "起動に失敗しました: {error}",
+      browse_error: "ファイルダイアログを開けませんでした。",
       notes_todo_title: "メモ & ToDo タスク",
       notes_hint: "[] または [ ] で始まる行は自動的に ToDo チェックリストになります。完了は [x] と表記。",
       btn_insert_todo: "+ [] タスク",
@@ -1036,7 +1115,17 @@
       detail_heading: "게임 상세 정보",
       exe_unspecified: "지정되지 않음 (백그라운드 측정 안 함)",
       btn_edit_game: "게임 편집",
+      btn_play: "실행",
+      btn_playing: "실행 중",
+      btn_details: "상세 정보",
       btn_delete: "삭제",
+      browsing: "찾아보는 중...",
+      steam_managed_title: "Steam 게임",
+      steam_managed_desc: "파일 및 실행은 Steam 클라이언트를 통해 자동으로 관리됩니다. 경로 수정이 잠겨 있습니다.",
+      toast_launching: "\"{title}\" 실행 중...",
+      toast_launch_success: "\"{title}\" 게임이 실행되었습니다!",
+      toast_launch_failed: "게임 실행 실패: {error}",
+      browse_error: "파일 선택 대화상자를 열 수 없습니다.",
       notes_todo_title: "메모 및 할 일 (ToDo)",
       notes_hint: "[] 또는 [ ]로 시작하는 줄은 자동으로 ToDo 항목이 됩니다. 완료된 항목은 [x]로 표시됩니다.",
       btn_insert_todo: "+ [] 할 일",
@@ -1102,6 +1191,7 @@
   // Polling timer
   let livePollingTimer = null;
   let notesAutoSaveTimer = null;
+  let toastTimeout = null;
 
   // Status mapping
   const StatusLabels = {
@@ -1234,14 +1324,118 @@
   }
 
   // ======================== TOAST NOTIFICATION ========================
-  function showToast(message) {
+  function showToast(message, type = 'success') {
     const toast = document.getElementById('toast-notification');
     const msgEl = document.getElementById('toast-message');
+    const iconEl = document.getElementById('toast-icon');
+
+    if (!toast || !msgEl) return;
     msgEl.textContent = message;
-    toast.classList.add('active');
-    setTimeout(() => {
+    toast.className = `toast-notification toast-${type} active`;
+
+    if (iconEl) {
+      if (type === 'error') {
+        iconEl.innerHTML = '<circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>';
+        iconEl.setAttribute('stroke', '#f43f5e');
+      } else if (type === 'warning') {
+        iconEl.innerHTML = '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>';
+        iconEl.setAttribute('stroke', '#f59e0b');
+      } else if (type === 'info') {
+        iconEl.innerHTML = '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>';
+        iconEl.setAttribute('stroke', '#38bdf8');
+      } else {
+        iconEl.innerHTML = '<polyline points="20 6 9 17 4 12"></polyline>';
+        iconEl.setAttribute('stroke', '#10b981');
+      }
+    }
+
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
       toast.classList.remove('active');
-    }, 3500);
+    }, 4000);
+  }
+
+  // ======================== GAME LAUNCH LOGIC ========================
+  async function launchGameById(gameId) {
+    const game = allGames.find(g => g.id === gameId);
+    const title = game ? game.title : 'Game';
+    showToast(t('toast_launching', { title }), 'info');
+
+    try {
+      const res = await fetch(`/api/gamelaunch/${gameId}`, { method: 'POST' });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.success) {
+          showToast(data.message || t('toast_launch_success', { title }), 'success');
+          setTimeout(loadGames, 1500);
+        } else {
+          showToast((data && data.error) ? data.error : t('toast_launch_failed', { error: 'Unknown error' }), 'error');
+        }
+      } else {
+        const errText = await res.text();
+        showToast(t('toast_launch_failed', { error: errText || 'Server error' }), 'error');
+      }
+    } catch (e) {
+      console.error('Launch failed:', e);
+      showToast(t('toast_launch_failed', { error: e.message || 'Network error' }), 'error');
+    }
+  }
+
+  // ======================== NATIVE BROWSE DIALOGS ========================
+  async function handleBrowseExe(targetInputId, buttonEl) {
+    if (!buttonEl || buttonEl.disabled) return;
+    const originalHtml = buttonEl.innerHTML;
+    buttonEl.disabled = true;
+    buttonEl.innerHTML = `<span class="spinner-sm"></span> ${t('browsing')}`;
+
+    try {
+      const res = await fetch('/api/dialog/select-exe');
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.path) {
+          const input = document.getElementById(targetInputId);
+          if (input) {
+            input.value = data.path;
+            input.classList.add('input-highlight');
+            setTimeout(() => input.classList.remove('input-highlight'), 1500);
+          }
+        }
+      }
+    } catch (e) {
+      console.error('Browse exe error:', e);
+      showToast(t('browse_error'), 'error');
+    } finally {
+      buttonEl.disabled = false;
+      buttonEl.innerHTML = originalHtml;
+    }
+  }
+
+  async function handleBrowseFolder(targetInputId, buttonEl) {
+    if (!buttonEl || buttonEl.disabled) return;
+    const originalHtml = buttonEl.innerHTML;
+    buttonEl.disabled = true;
+    buttonEl.innerHTML = `<span class="spinner-sm"></span> ${t('browsing')}`;
+
+    try {
+      const res = await fetch('/api/dialog/select-steam-folder');
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.path) {
+          const input = document.getElementById(targetInputId);
+          if (input) {
+            input.value = data.path;
+            input.classList.add('input-highlight');
+            setTimeout(() => input.classList.remove('input-highlight'), 1500);
+          }
+        }
+      }
+    } catch (e) {
+      console.error('Browse folder error:', e);
+      showToast(t('browse_error'), 'error');
+    } finally {
+      buttonEl.disabled = false;
+      buttonEl.innerHTML = originalHtml;
+    }
   }
 
   // ======================== LOAD GAMES ========================
@@ -1427,12 +1621,18 @@
 
   function createGameCard(game) {
     const card = document.createElement('div');
-    card.className = 'game-card';
+    card.className = 'game-card' + (game.isRunning ? ' game-card-running' : '');
     card.dataset.id = game.id;
 
     let coverHtml;
     if (game.coverUrl) {
-      coverHtml = `<img class="game-cover-img" src="${escapeHtml(game.coverUrl)}" alt="${escapeHtml(game.title)}" onerror="this.parentElement.innerHTML='<div class=\\'game-cover-placeholder\\'><span>🎮</span><span style=\\'font-size:11px;\\'>${escapeHtml(game.title)}</span></div>'">`;
+      coverHtml = `
+        <img class="game-cover-img" src="${escapeHtml(game.coverUrl)}" alt="${escapeHtml(game.title)}" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';">
+        <div class="game-cover-placeholder" style="display: none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="6"></rect><line x1="6" y1="12" x2="10" y2="12"></line><line x1="8" y1="10" x2="8" y2="14"></line></svg>
+          <span style="font-size: 12px; font-weight: 600;">${escapeHtml(game.title)}</span>
+        </div>
+      `;
     } else {
       coverHtml = `
         <div class="game-cover-placeholder">
@@ -1455,6 +1655,19 @@
           <span class="platform-badge">${escapeHtml(game.platform)}</span>
         </div>
         ${game.isRunning ? `<div class="live-playing-overlay"><div class="pulse-dot"></div> ${t('now_playing')}</div>` : ''}
+
+        <!-- Hover Quick Actions -->
+        <div class="game-card-hover-actions">
+          <button type="button" class="card-quick-play-btn" data-action="play">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span>${game.isRunning ? t('btn_playing') : t('btn_play')}</span>
+          </button>
+          <button type="button" class="card-quick-details-btn" data-action="details">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <span>${t('btn_details')}</span>
+          </button>
+        </div>
+
         ${coverHtml}
       </div>
       <div class="game-card-body">
@@ -1469,6 +1682,16 @@
       </div>
     `;
 
+    // Click on quick play button
+    const quickPlayBtn = card.querySelector('.card-quick-play-btn');
+    if (quickPlayBtn) {
+      quickPlayBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        launchGameById(game.id);
+      });
+    }
+
+    // Click on quick details button or anywhere on card opens details
     card.addEventListener('click', () => {
       openGameDetails(game.id);
     });
@@ -1615,17 +1838,12 @@
       }
     });
 
-    document.getElementById('btn-browse-add-exe').addEventListener('click', async () => {
-      try {
-        const res = await fetch('/api/dialog/select-exe');
-        const data = await res.json();
-        if (data.path) {
-          document.getElementById('add-game-exe').value = data.path;
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    });
+    const browseAddExeBtn = document.getElementById('btn-browse-add-exe');
+    if (browseAddExeBtn) {
+      browseAddExeBtn.addEventListener('click', function() {
+        handleBrowseExe('add-game-exe', this);
+      });
+    }
   }
 
   // ======================== GAME DETAILS MODAL & NOTES ========================
@@ -1716,22 +1934,14 @@
       });
     }
 
-    // Delete Game Button
-    // Play Game
-    document.getElementById('btn-play-game').addEventListener('click', async () => {
-      if (!currentGame) return;
-      try {
-        const res = await fetch(`/api/gamelaunch/${currentGame.id}`, { method: 'POST' });
-        if (res.ok) {
-          showToast(t('now_playing') + '...');
-        } else {
-          const err = await res.text();
-          alert(err);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    });
+    // Play Game Button in Details Modal
+    const heroPlayBtn = document.getElementById('btn-play-game');
+    if (heroPlayBtn) {
+      heroPlayBtn.addEventListener('click', () => {
+        if (!currentGame) return;
+        launchGameById(currentGame.id);
+      });
+    }
 
     document.getElementById('btn-delete-game').addEventListener('click', async () => {
       if (!currentGame) return;
@@ -1941,36 +2151,37 @@
     document.getElementById('edit-game-platform').value = game.platform;
     document.getElementById('edit-game-status').value = game.status;
     document.getElementById('edit-game-base-hours').value = game.baseHours;
-    
+
+    const steamNotice = document.getElementById('edit-steam-notice');
     const exeInput = document.getElementById('edit-game-exe');
     const browseBtn = document.getElementById('btn-browse-edit-exe');
-    
+
     exeInput.value = game.executablePath || '';
-    
-    // Disable editing for Steam games
+
+    // Disable editing for Steam games with clear user feedback
     if (game.isSteam) {
-        exeInput.disabled = true;
-        browseBtn.disabled = true;
+      if (steamNotice) steamNotice.style.display = 'flex';
+      exeInput.disabled = true;
+      exeInput.style.opacity = '0.55';
+      exeInput.placeholder = t('steam_managed_title');
+      if (browseBtn) browseBtn.style.display = 'none';
     } else {
-        exeInput.disabled = false;
+      if (steamNotice) steamNotice.style.display = 'none';
+      exeInput.disabled = false;
+      exeInput.style.opacity = '1';
+      exeInput.placeholder = 'C:\\Games\\Game\\game.exe';
+      if (browseBtn) {
+        browseBtn.style.display = 'inline-flex';
         browseBtn.disabled = false;
+      }
     }
 
     document.getElementById('edit-cover-file-input').value = '';
-
     document.getElementById('edit-game-modal').classList.add('active');
   }
 
-  document.getElementById('btn-browse-edit-exe').addEventListener('click', async () => {
-    try {
-      const res = await fetch('/api/dialog/select-exe');
-      const data = await res.json();
-      if (data.path) {
-        document.getElementById('edit-game-exe').value = data.path;
-      }
-    } catch (e) {
-      console.error(e);
-    }
+  document.getElementById('btn-browse-edit-exe').addEventListener('click', function() {
+    handleBrowseExe('edit-game-exe', this);
   });
 
   document.getElementById('btn-save-edit-game').addEventListener('click', async () => {
@@ -2352,17 +2563,12 @@
     }
 
     // Steam Folder Browse
-    document.getElementById('btn-browse-steam-folder').addEventListener('click', async () => {
-      try {
-        const res = await fetch('/api/dialog/select-steam-folder');
-        const data = await res.json();
-        if (data.path) {
-          document.getElementById('setting-steam-path').value = data.path;
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    });
+    const browseSteamBtn = document.getElementById('btn-browse-steam-folder');
+    if (browseSteamBtn) {
+      browseSteamBtn.addEventListener('click', function() {
+        handleBrowseFolder('setting-steam-path', this);
+      });
+    }
 
     // Save Settings Button
     document.getElementById('btn-save-settings').addEventListener('click', async () => {
