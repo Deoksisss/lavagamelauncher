@@ -124,6 +124,10 @@
       toast_game_added: "Game \"{title}\" added!",
       toast_game_updated: "Changes saved",
       toast_game_deleted: "Game \"{title}\" deleted",
+      toast_game_delete_error: "Failed to delete game",
+      confirm_delete_title: "Delete Game?",
+      confirm_delete_msg: "Are you sure you want to delete \"{title}\" and all its playtime statistics?",
+      confirm_delete_steam_note: "The game will remain installed in Steam, but it will be removed from GameTracker and won't be re-imported automatically.",
       delete_confirm: "Are you sure you want to delete \"{title}\" and all its playtime history?",
       no_activity: "No activity recorded for this period.",
       other_games: "Others",
@@ -252,6 +256,10 @@
       toast_game_added: "Игра «{title}» добавлена!",
       toast_game_updated: "Изменения сохранены",
       toast_game_deleted: "Игра «{title}» удалена",
+      toast_game_delete_error: "Не удалось удалить игру",
+      confirm_delete_title: "Удалить игру?",
+      confirm_delete_msg: "Вы действительно хотите удалить игру «{title}» и всю статистику времени?",
+      confirm_delete_steam_note: "Игра останется установленной в Steam, но будет удалена из GameTracker и не будет повторно импортироваться автоматически.",
       delete_confirm: "Вы действительно хотите удалить игру «{title}» и всю историю времени?",
       no_activity: "Активности за выбранный период не зафиксировано.",
       other_games: "Остальные",
@@ -380,6 +388,10 @@
       toast_game_added: "Jogo \"{title}\" adicionado!",
       toast_game_updated: "Alterações salvas",
       toast_game_deleted: "Jogo \"{title}\" excluído",
+      toast_game_delete_error: "Falha ao excluir o jogo",
+      confirm_delete_title: "Excluir jogo?",
+      confirm_delete_msg: "Tem certeza de que deseja excluir \"{title}\" e todas as estatísticas?",
+      confirm_delete_steam_note: "O jogo permanecerá instalado na Steam, mas será removido do GameTracker e não será reimportado automaticamente.",
       delete_confirm: "Tem certeza de que deseja excluir \"{title}\" e todo o histórico?",
       no_activity: "Nenhuma atividade registrada no período.",
       other_games: "Outros",
@@ -508,6 +520,10 @@
       toast_game_added: "¡Juego \"{title}\" añadido!",
       toast_game_updated: "Cambios guardados",
       toast_game_deleted: "Juego \"{title}\" eliminado",
+      toast_game_delete_error: "Error al eliminar el juego",
+      confirm_delete_title: "¿Eliminar juego?",
+      confirm_delete_msg: "¿Estás seguro de que quieres eliminar \"{title}\" y todas sus estadísticas?",
+      confirm_delete_steam_note: "El juego permanecerá instalado en Steam, pero se eliminará de GameTracker y no se volverá a importar automáticamente.",
       delete_confirm: "¿Estás seguro de que quieres eliminar \"{title}\" y todo su historial?",
       no_activity: "No hay actividad registrada en este período.",
       other_games: "Otros",
@@ -636,6 +652,10 @@
       toast_game_added: "Spiel \"{title}\" hinzugefügt!",
       toast_game_updated: "Änderungen gespeichert",
       toast_game_deleted: "Spiel \"{title}\" gelöscht",
+      toast_game_delete_error: "Fehler beim Löschen des Spiels",
+      confirm_delete_title: "Spiel löschen?",
+      confirm_delete_msg: "Möchten Sie \"{title}\" und alle Spielzeitstatistiken wirklich löschen?",
+      confirm_delete_steam_note: "Das Spiel bleibt in Steam installiert, wird jedoch aus GameTracker entfernt und nicht automatisch erneut importiert.",
       delete_confirm: "Möchten Sie \"{title}\" und den gesamten Spielzeitverlauf wirklich löschen?",
       no_activity: "Keine Aktivität im gewählten Zeitraum aufgezeichnet.",
       other_games: "Andere",
@@ -764,6 +784,10 @@
       toast_game_added: "Jeu \"{title}\" ajouté !",
       toast_game_updated: "Modifications enregistrées",
       toast_game_deleted: "Jeu \"{title}\" supprimé",
+      toast_game_delete_error: "Échec de la suppression du jeu",
+      confirm_delete_title: "Supprimer le jeu ?",
+      confirm_delete_msg: "Voulez-vous vraiment supprimer \"{title}\" et toutes ses statistiques de jeu ?",
+      confirm_delete_steam_note: "Le jeu restera installé sur Steam, mais sera supprimé de GameTracker et ne sera pas réimporté automatiquement.",
       delete_confirm: "Voulez-vous vraiment supprimer \"{title}\" et tout son historique ?",
       no_activity: "Aucune activité enregistrée sur cette période.",
       other_games: "Autres",
@@ -892,6 +916,10 @@
       toast_game_added: "游戏《{title}》已添加！",
       toast_game_updated: "修改已保存",
       toast_game_deleted: "游戏《{title}》已删除",
+      toast_game_delete_error: "删除游戏失败",
+      confirm_delete_title: "删除游戏？",
+      confirm_delete_msg: "确定要彻底删除《{title}》及其所有游戏时长统计吗？",
+      confirm_delete_steam_note: "该游戏仍保留在 Steam 中，但会从 GameTracker 中移除，且不会自动重新导入。",
       delete_confirm: "确定要彻底删除游戏《{title}》及所有游玩历史吗？",
       no_activity: "该周期内暂无游玩记录。",
       other_games: "其他游戏",
@@ -1020,6 +1048,10 @@
       toast_game_added: "「{title}」を追加しました！",
       toast_game_updated: "変更を保存しました",
       toast_game_deleted: "「{title}」を削除しました",
+      toast_game_delete_error: "ゲームの削除に失敗しました",
+      confirm_delete_title: "ゲームを削除しますか？",
+      confirm_delete_msg: "「{title}」とすべてのプレイ時間統計を削除してもよろしいですか？",
+      confirm_delete_steam_note: "ゲームはSteamに残りますが、GameTrackerから削除され、自動的に再インポートされることはありません。",
       delete_confirm: "「{title}」とすべてのプレイ記録を削除してもよろしいですか？",
       no_activity: "この期間のプレイ記録はありません。",
       other_games: "その他",
@@ -1148,6 +1180,10 @@
       toast_game_added: "\"{title}\" 게임이 추가되었습니다!",
       toast_game_updated: "변경 사항이 저장되었습니다",
       toast_game_deleted: "\"{title}\" 게임이 삭제되었습니다",
+      toast_game_delete_error: "게임을 삭제하지 못했습니다",
+      confirm_delete_title: "게임을 삭제하시겠습니까?",
+      confirm_delete_msg: "\"{title}\" 게임과 모든 플레이 시간 통계를 삭제하시겠습니까?",
+      confirm_delete_steam_note: "게임은 Steam에 그대로 유지되지만 GameTracker에서 삭제되며 자동으로 다시 가져오지 않습니다.",
       delete_confirm: "\"{title}\" 게임과 모든 활동 기록을 정말 삭제하시겠습니까?",
       no_activity: "선택한 기간 동안 기록된 활동이 없습니다.",
       other_games: "기타",
@@ -1378,6 +1414,58 @@
     } catch (e) {
       console.error('Launch failed:', e);
       showToast(t('toast_launch_failed', { error: e.message || 'Network error' }), 'error');
+    }
+  }
+
+  // ======================== GAME DELETION LOGIC ========================
+  let confirmDeleteResolve = null;
+
+  function promptDeleteConfirmation(game) {
+    return new Promise((resolve) => {
+      confirmDeleteResolve = resolve;
+      const modal = document.getElementById('confirm-delete-modal');
+      const titleEl = document.getElementById('confirm-delete-title');
+      const msgEl = document.getElementById('confirm-delete-message');
+      const steamHint = document.getElementById('confirm-delete-steam-hint');
+
+      if (titleEl) titleEl.textContent = t('confirm_delete_title');
+      if (msgEl) msgEl.textContent = t('confirm_delete_msg', { title: game.title });
+      if (steamHint) {
+        steamHint.style.display = game.isSteam ? 'block' : 'none';
+        steamHint.textContent = t('confirm_delete_steam_note');
+      }
+
+      if (modal) modal.classList.add('active');
+    });
+  }
+
+  async function deleteGameById(gameId) {
+    const game = allGames.find(g => String(g.id).toLowerCase() === String(gameId).toLowerCase()) || currentGame;
+    if (!game) {
+      showToast(t('toast_game_delete_error'), 'error');
+      return;
+    }
+
+    const confirmed = await promptDeleteConfirmation(game);
+    if (!confirmed) return;
+
+    try {
+      const res = await fetch(`/api/games/${encodeURIComponent(game.id)}`, { method: 'DELETE' });
+      if (res.ok) {
+        closeAllModals();
+        showToast(t('toast_game_deleted', { title: game.title }), 'success');
+        currentGame = null;
+        await loadGames();
+        if (currentTab === 'stats') {
+          loadStatistics(activeStatsPeriod);
+        }
+      } else {
+        const data = await res.json().catch(() => ({}));
+        showToast(data.error || t('toast_game_delete_error'), 'error');
+      }
+    } catch (err) {
+      console.error('Delete game failed:', err);
+      showToast(t('toast_game_delete_error'), 'error');
     }
   }
 
@@ -1943,24 +2031,13 @@
       });
     }
 
-    document.getElementById('btn-delete-game').addEventListener('click', async () => {
-      if (!currentGame) return;
-      if (!confirm(t('delete_confirm', { title: currentGame.title }))) {
-        return;
-      }
-
-      try {
-        const res = await fetch(`/api/games/${currentGame.id}`, { method: 'DELETE' });
-        if (res.ok) {
-          closeAllModals();
-          showToast(t('toast_game_deleted', { title: currentGame.title }));
-          currentGame = null;
-          await loadGames();
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    });
+    const btnDeleteGame = document.getElementById('btn-delete-game');
+    if (btnDeleteGame) {
+      btnDeleteGame.addEventListener('click', () => {
+        if (!currentGame) return;
+        deleteGameById(currentGame.id);
+      });
+    }
 
     // Open Edit Modal Button
     document.getElementById('btn-open-edit-game').addEventListener('click', () => {
@@ -2665,6 +2742,46 @@
       document.getElementById('add-game-modal').classList.add('active');
     });
 
+    // Wire up in-app confirmation modal buttons
+    const confirmDeleteModal = document.getElementById('confirm-delete-modal');
+    const btnConfirmDelete = document.getElementById('btn-confirm-delete');
+    const btnCancelDelete = document.getElementById('btn-cancel-delete');
+
+    if (btnConfirmDelete) {
+      btnConfirmDelete.addEventListener('click', () => {
+        if (confirmDeleteModal) confirmDeleteModal.classList.remove('active');
+        if (confirmDeleteResolve) {
+          const res = confirmDeleteResolve;
+          confirmDeleteResolve = null;
+          res(true);
+        }
+      });
+    }
+
+    if (btnCancelDelete) {
+      btnCancelDelete.addEventListener('click', () => {
+        if (confirmDeleteModal) confirmDeleteModal.classList.remove('active');
+        if (confirmDeleteResolve) {
+          const res = confirmDeleteResolve;
+          confirmDeleteResolve = null;
+          res(false);
+        }
+      });
+    }
+
+    // Delete button inside Edit Game modal footer
+    const btnDeleteFromEdit = document.getElementById('btn-delete-from-edit');
+    if (btnDeleteFromEdit) {
+      btnDeleteFromEdit.addEventListener('click', () => {
+        const id = document.getElementById('edit-game-id').value;
+        if (id) {
+          deleteGameById(id);
+        } else if (currentGame) {
+          deleteGameById(currentGame.id);
+        }
+      });
+    }
+
     document.querySelectorAll('.close-modal-btn').forEach(btn => {
       btn.addEventListener('click', closeAllModals);
     });
@@ -2672,13 +2789,32 @@
     document.querySelectorAll('.modal-backdrop').forEach(modal => {
       modal.addEventListener('click', (e) => {
         if (e.target === modal) {
-          closeAllModals();
+          if (modal.id === 'confirm-delete-modal') {
+            modal.classList.remove('active');
+            if (confirmDeleteResolve) {
+              const res = confirmDeleteResolve;
+              confirmDeleteResolve = null;
+              res(false);
+            }
+          } else {
+            closeAllModals();
+          }
         }
       });
     });
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
+        const confirmModal = document.getElementById('confirm-delete-modal');
+        if (confirmModal && confirmModal.classList.contains('active')) {
+          confirmModal.classList.remove('active');
+          if (confirmDeleteResolve) {
+            const res = confirmDeleteResolve;
+            confirmDeleteResolve = null;
+            res(false);
+          }
+          return;
+        }
         closeAllModals();
       }
     });
@@ -2687,6 +2823,11 @@
   function closeAllModals() {
     document.querySelectorAll('.modal-backdrop').forEach(m => m.classList.remove('active'));
     document.getElementById('add-autocomplete-dropdown').classList.remove('active');
+    if (confirmDeleteResolve) {
+      const res = confirmDeleteResolve;
+      confirmDeleteResolve = null;
+      res(false);
+    }
     currentGame = null;
   }
 

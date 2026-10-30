@@ -107,8 +107,14 @@ app.MapPost("/api/games", (GameItem game) =>
 // 4. Delete game
 app.MapDelete("/api/games/{id}", (string id) =>
 {
+    if (string.IsNullOrWhiteSpace(id))
+    {
+        return Results.BadRequest(new { success = false, error = "Идентификатор игры обязателен" });
+    }
     var success = repository.DeleteGame(id);
-    return success ? Results.Ok(new { success = true }) : Results.NotFound();
+    return success 
+        ? Results.Ok(new { success = true }) 
+        : Results.NotFound(new { success = false, error = "Игра не найдена в библиотеке" });
 });
 
 // 5. Upload custom cover file

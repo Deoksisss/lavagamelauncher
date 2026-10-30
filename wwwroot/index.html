@@ -578,9 +578,44 @@
         </div>
       </div>
 
-      <div class="modal-footer">
-        <button class="btn btn-secondary close-modal-btn" data-i18n="btn_cancel">Cancel</button>
-        <button id="btn-save-edit-game" class="btn btn-primary" data-i18n="btn_save_changes">Save Changes</button>
+      <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+        <button type="button" id="btn-delete-from-edit" class="btn btn-danger btn-sm">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          <span data-i18n="btn_delete">Delete</span>
+        </button>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-secondary close-modal-btn" data-i18n="btn_cancel">Cancel</button>
+          <button id="btn-save-edit-game" class="btn btn-primary" data-i18n="btn_save_changes">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRM DELETE MODAL -->
+  <div id="confirm-delete-modal" class="modal-backdrop">
+    <div class="modal-container" style="max-width: 440px; text-align: center;">
+      <div class="modal-body" style="padding: 28px 24px 20px;">
+        <div style="width: 54px; height: 54px; border-radius: 50%; background: rgba(239, 68, 68, 0.15); color: var(--accent-rose); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <line x1="10" y1="11" x2="10" y2="17"></line>
+            <line x1="14" y1="11" x2="14" y2="17"></line>
+          </svg>
+        </div>
+        <div style="font-size: 18px; font-weight: 700; margin-bottom: 8px;" id="confirm-delete-title" data-i18n="confirm_delete_title">
+          Delete Game?
+        </div>
+        <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;" id="confirm-delete-message">
+          Are you sure you want to delete this game and its playtime statistics?
+        </div>
+        <div id="confirm-delete-steam-hint" style="font-size: 12px; color: var(--text-muted); background: var(--bg-hover); padding: 8px 12px; border-radius: 8px; margin-bottom: 16px; display: none;" data-i18n="confirm_delete_steam_note">
+          The game files will remain in your Steam library, but it will be removed from GameTracker and won't be re-imported automatically.
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 18px;">
+          <button type="button" id="btn-cancel-delete" class="btn btn-secondary" style="flex: 1;" data-i18n="btn_cancel">Cancel</button>
+          <button type="button" id="btn-confirm-delete" class="btn btn-danger" style="flex: 1;" data-i18n="btn_delete">Delete</button>
+        </div>
       </div>
     </div>
   </div>
@@ -596,6 +631,6 @@
   <!-- Chart.js local bundle -->
   <script src="js/chart.umd.min.js"></script>
   <!-- Application Script -->
-  <script src="js/app.js?v=20261030"></script>
+  <script src="js/app.js?v=20261030b"></script>
 </body>
 </html>

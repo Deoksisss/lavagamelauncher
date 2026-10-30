@@ -8,4 +8,5 @@ public class AppSettings
     public int TrackerIntervalMs { get; set; } = 3000;
     public string Language { get; set; } = "en"; // en, ru, pt, es, de, fr, zh, ja, ko
     public string Theme { get; set; } = "dark";   // dark, light
+    public List<string> IgnoredSteamAppIds { get; set; } = new();
 }

@@ -47,6 +47,13 @@ public class SteamService
                         continue;
                     }
 
+                    // Skip games explicitly deleted/ignored by the user
+                    if (settings.IgnoredSteamAppIds != null && settings.IgnoredSteamAppIds.Contains(gameInfo.AppId, StringComparer.OrdinalIgnoreCase))
+                    {
+                        _logger.LogInformation("Skipping deleted/ignored Steam game: {Name} (AppId: {AppId})", gameInfo.Name, gameInfo.AppId);
+                        continue;
+                    }
+
                     var allGames = _repository.GetAllGames();
                     var existing = allGames.FirstOrDefault(g => g.SteamAppId == gameInfo.AppId || 
                         (!string.IsNullOrEmpty(gameInfo.Name) && g.Title.Equals(gameInfo.Name, StringComparison.OrdinalIgnoreCase)));

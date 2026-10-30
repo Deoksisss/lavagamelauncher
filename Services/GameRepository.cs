@@ -86,7 +86,7 @@ public class GameRepository
     {
         lock (_lock)
         {
-            var g = _games.FirstOrDefault(x => x.Id == id);
+            var g = _games.FirstOrDefault(x => string.Equals(x.Id, id, StringComparison.OrdinalIgnoreCase));
             return g != null ? Clone(g) : null;
         }
     }
@@ -95,7 +95,7 @@ public class GameRepository
     {
         lock (_lock)
         {
-            var existing = _games.FirstOrDefault(x => x.Id == game.Id);
+            var existing = _games.FirstOrDefault(x => string.Equals(x.Id, game.Id, StringComparison.OrdinalIgnoreCase));
             if (existing != null)
             {
                 existing.Title = game.Title;
@@ -118,8 +118,18 @@ public class GameRepository
                 }
                 _games.Add(game);
             }
+
+            // If this game was previously ignored in Steam imports, remove it from ignored list
+            if (!string.IsNullOrWhiteSpace(game.SteamAppId) && _settings.IgnoredSteamAppIds != null)
+            {
+                if (_settings.IgnoredSteamAppIds.RemoveAll(x => string.Equals(x, game.SteamAppId, StringComparison.OrdinalIgnoreCase)) > 0)
+                {
+                    SaveSettingsInternal();
+                }
+            }
+
             SaveGamesInternal();
-            return Clone(_games.First(x => x.Id == game.Id));
+            return Clone(_games.First(x => string.Equals(x.Id, game.Id, StringComparison.OrdinalIgnoreCase)));
         }
     }
 
@@ -127,12 +137,23 @@ public class GameRepository
     {
         lock (_lock)
         {
-            var g = _games.FirstOrDefault(x => x.Id == id);
+            var g = _games.FirstOrDefault(x => string.Equals(x.Id, id, StringComparison.OrdinalIgnoreCase));
             if (g != null)
             {
+                // If this is a Steam game, record its SteamAppId in IgnoredSteamAppIds so Steam scan does not automatically re-import it
+                if (!string.IsNullOrWhiteSpace(g.SteamAppId))
+                {
+                    _settings.IgnoredSteamAppIds ??= new List<string>();
+                    if (!_settings.IgnoredSteamAppIds.Contains(g.SteamAppId, StringComparer.OrdinalIgnoreCase))
+                    {
+                        _settings.IgnoredSteamAppIds.Add(g.SteamAppId);
+                        SaveSettingsInternal();
+                    }
+                }
+
                 _games.Remove(g);
                 // Also clean activity logs for this game
-                _activityLogs.RemoveAll(a => a.GameId == id);
+                _activityLogs.RemoveAll(a => string.Equals(a.GameId, id, StringComparison.OrdinalIgnoreCase));
                 SaveGamesInternal();
                 SaveActivityInternal();
                 return true;
@@ -190,7 +211,8 @@ public class GameRepository
                 ScanSteamOnStartup = _settings.ScanSteamOnStartup,
                 TrackerIntervalMs = _settings.TrackerIntervalMs,
                 Language = _settings.Language,
-                Theme = _settings.Theme
+                Theme = _settings.Theme,
+                IgnoredSteamAppIds = new List<string>(_settings.IgnoredSteamAppIds ?? new List<string>())
             };
         }
     }
@@ -199,6 +221,10 @@ public class GameRepository
     {
         lock (_lock)
         {
+            if (settings.IgnoredSteamAppIds == null || settings.IgnoredSteamAppIds.Count == 0)
+            {
+                settings.IgnoredSteamAppIds = new List<string>(_settings.IgnoredSteamAppIds ?? new List<string>());
+            }
             _settings = settings;
             SaveSettingsInternal();
         }
